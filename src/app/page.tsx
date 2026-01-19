@@ -6,19 +6,19 @@ import PassionsSection from '@/components/sections/PassionsSection'
 import GallerySection from '@/components/sections/GallerySection'
 import LegacySection from '@/components/sections/LegacySection'
 import FooterSection from '@/components/sections/FooterSection'
-import { getMediaCount } from '@/lib/mediaCount'
+import { getMediaCounts } from '@/lib/mediaCount'
 
 export default function Home() {
-  const mediaCount = getMediaCount()
+  const { photos, videos, total } = getMediaCounts()
   
   return (
     <main>
-      <Navigation />
+      <Navigation photoCount={photos} videoCount={videos} />
       <HeroSection />
       <LifeSection />
       <ServiceSection />
       <PassionsSection />
-      <GallerySection mediaCount={mediaCount} />
+      <GallerySection mediaCount={total} />
       <LegacySection />
       <FooterSection />
     </main>

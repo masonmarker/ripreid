@@ -10,13 +10,19 @@ const navLinks = [
   { href: '/#service', label: 'Service' },
   { href: '/#passions', label: 'Passions' },
   // { href: '/#gallery', label: 'Gallery' },
-  { href: '/gallery', label: 'Full Gallery' },
+  { href: '/gallery', label: 'Full Gallery', isGallery: true },
   { href: '/#legacy', label: 'Legacy' },
 ]
 
-export default function Navigation() {
+interface NavigationProps {
+  photoCount?: number
+  videoCount?: number
+}
+
+export default function Navigation({ photoCount = 0, videoCount = 0 }: NavigationProps) {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const hasMedia = photoCount > 0 || videoCount > 0
 
   useEffect(() => {
     const handleScroll = () => {
@@ -54,9 +60,16 @@ export default function Navigation() {
                 href={link.href}
                 className={`text-sm font-medium tracking-wide transition-colors duration-300 hover:opacity-70 ${
                   isScrolled ? 'text-forest-700' : 'text-white/90'
-                }`}
+                } ${'isGallery' in link && link.isGallery ? 'relative' : ''}`}
               >
                 {link.label}
+                {'isGallery' in link && link.isGallery && hasMedia && (
+                  <span className={`absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] whitespace-nowrap ${
+                    isScrolled ? 'text-forest-500' : 'text-white/70'
+                  }`}>
+                    {photoCount} photos · {videoCount} videos
+                  </span>
+                )}
               </a>
             ))}
           </div>

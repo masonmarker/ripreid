@@ -96,7 +96,7 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
 
   return (
     <main className="bg-warmstone-50 min-h-screen">
-      <Navigation />
+      <Navigation photoCount={photoCount} videoCount={videoCount} />
       
       {/* Header */}
       <section className="py-24 lg:py-32 bg-gradient-to-b from-forest-900 to-forest-800 text-warmstone-50">
