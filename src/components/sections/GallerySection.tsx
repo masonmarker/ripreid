@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, Mail, Camera, Video, ArrowRight, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Camera, Video, ArrowRight, Images, Heart, Shield, Compass, Users, Star, Copy, Check, Info } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 
@@ -24,6 +24,13 @@ interface GallerySectionProps {
 export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) {
   const [activeCategory, setActiveCategory] = useState('all')
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [copied, setCopied] = useState(false)
+
+  const handleCopyEmail = async () => {
+    await navigator.clipboard.writeText('mason1marker@gmail.com')
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
 
   const filteredMedia = activeCategory === 'all'
     ? galleryPreview
@@ -204,48 +211,42 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
 
         {/* Submit Your Memories */}
         <AnimatedSection delay={0.3}>
-          <div className="mt-20 bg-gradient-to-br from-forest-800 to-forest-900 rounded-2xl p-8 md:p-12 text-center">
-            <div className="flex justify-center gap-3 mb-6">
-              <Camera className="w-6 h-6 text-warmstone-300" />
-              <Video className="w-6 h-6 text-warmstone-300" />
-            </div>
-            <h3
-              className="text-2xl md:text-3xl font-serif text-warmstone-100 mb-4"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
-            >
-              Share Your Memories
-            </h3>
-            <p className="text-warmstone-300 text-lg mb-8 max-w-xl mx-auto">
-              Have a photo or video of Reid? His family would love to add your memories to this collection.
-            </p>
-            
-            <div className="bg-forest-950/40 rounded-xl p-6 md:p-8 max-w-lg mx-auto text-left">
-              <div className="flex items-center gap-3 mb-4">
-                <Mail className="w-5 h-5 text-warmstone-400" />
-                <span className="text-warmstone-200 font-medium">Email your photo/video to:</span>
+          <div className="mt-16 bg-forest-800/90 rounded-xl p-6">
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+              <div className="flex items-center gap-4 text-center sm:text-left">
+                <div className="hidden sm:flex items-center gap-2 text-warmstone-400">
+                  <Camera className="w-5 h-5" />
+                  <Video className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-warmstone-100 font-medium">Have a photo or video of Reid?</p>
+                  <p className="text-warmstone-400 text-sm">Send it to his family at <span className="text-warmstone-300">mason1marker@gmail.com</span></p>
+                </div>
               </div>
-              <a 
-                href="mailto:mason1marker@gmail.com" 
-                className="text-xl md:text-2xl text-warmstone-100 font-medium hover:text-warmstone-300 transition-colors block mb-6"
+              <button 
+                onClick={handleCopyEmail}
+                className="inline-flex items-center gap-2 px-5 py-2.5 bg-warmstone-100 text-forest-800 rounded-full font-medium text-sm hover:bg-white transition-all whitespace-nowrap"
               >
-                mason1marker@gmail.com
-              </a>
-              
-              <p className="text-warmstone-300 mb-4">Please include:</p>
-              <ul className="space-y-2 text-warmstone-300">
-                <li className="flex items-start gap-2">
-                  <span className="text-warmstone-500">•</span>
-                  <span><strong className="text-warmstone-200">Your name</strong> or @handle on social media</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-warmstone-500">•</span>
-                  <span><strong className="text-warmstone-200">A short caption</strong> about the memory</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-warmstone-500">•</span>
-                  <span><strong className="text-warmstone-200">Where it was taken</strong> <span className="text-warmstone-500">(optional)</span></span>
-                </li>
-              </ul>
+                {copied ? (
+                  <>
+                    <Check className="w-4 h-4 text-green-600" />
+                    <span className="text-green-600">Copied!</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    Copy Email
+                  </>
+                )}
+              </button>
+            </div>
+            <div className="mt-4 pt-4 border-t border-warmstone-700/50 flex items-start gap-2">
+              <Info className="w-4 h-4 text-warmstone-500 mt-0.5 flex-shrink-0" />
+              <p className="text-warmstone-400 text-xs">
+                Please include: <span className="text-warmstone-300">your name or social handle</span>, 
+                <span className="text-warmstone-300"> a short caption</span> about the memory, 
+                and <span className="text-warmstone-300">when/where</span> it was taken (optional)
+              </p>
             </div>
           </div>
         </AnimatedSection>

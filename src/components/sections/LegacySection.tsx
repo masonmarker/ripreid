@@ -106,9 +106,9 @@ export default function LegacySection() {
                 <h4 className="font-medium text-forest-800">Final Resting Place</h4>
               </div>
               <p className="text-forest-700 leading-relaxed">
-                Reid will be laid to rest with full military honors at 
+                Reid was laid to rest with full military honors at 
                 <strong> Arlington National Cemetery</strong>, a fitting tribute to his 
-                dedicated service to our country.
+                dedicated service to our country. He was buried in section <strong>36:804</strong>
               </p>
             </div>
             <div className="bg-warmstone-50 rounded-2xl p-8">
