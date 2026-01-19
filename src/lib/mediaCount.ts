@@ -1,10 +1,18 @@
 import fs from 'fs'
 import path from 'path'
 
-const MEDIA_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp', '.mp4', '.mov', '.webm']
+const PHOTO_EXTENSIONS = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+const VIDEO_EXTENSIONS = ['.mp4', '.mov', '.webm']
 
-function countMediaFilesRecursive(dir: string): number {
-  let count = 0
+interface MediaCounts {
+  photos: number
+  videos: number
+  total: number
+}
+
+function countMediaFilesRecursive(dir: string): { photos: number; videos: number } {
+  let photos = 0
+  let videos = 0
   
   try {
     const items = fs.readdirSync(dir)
@@ -14,23 +22,36 @@ function countMediaFilesRecursive(dir: string): number {
       const stat = fs.statSync(fullPath)
       
       if (stat.isDirectory()) {
-        count += countMediaFilesRecursive(fullPath)
+        const subCounts = countMediaFilesRecursive(fullPath)
+        photos += subCounts.photos
+        videos += subCounts.videos
       } else if (stat.isFile()) {
         const ext = path.extname(item).toLowerCase()
-        if (MEDIA_EXTENSIONS.includes(ext)) {
-          count++
+        if (PHOTO_EXTENSIONS.includes(ext)) {
+          photos++
+        } else if (VIDEO_EXTENSIONS.includes(ext)) {
+          videos++
         }
       }
     }
   } catch {
     // Directory doesn't exist or can't be read
-    return 0
+    return { photos: 0, videos: 0 }
   }
   
-  return count
+  return { photos, videos }
+}
+
+export function getMediaCounts(): MediaCounts {
+  const publicDir = path.join(process.cwd(), 'public')
+  const counts = countMediaFilesRecursive(publicDir)
+  return {
+    photos: counts.photos,
+    videos: counts.videos,
+    total: counts.photos + counts.videos
+  }
 }
 
 export function getMediaCount(): number {
-  const publicDir = path.join(process.cwd(), 'public')
-  return countMediaFilesRecursive(publicDir)
+  return getMediaCounts().total
 }
