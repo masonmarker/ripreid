@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, Mail, Camera, Video, ArrowLeft } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Mail, Camera, Video, ArrowLeft, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
 import AnimatedSection from '@/components/AnimatedSection'
 import MediaPlaceholder from '@/components/MediaPlaceholder'
 import Navigation from '@/components/Navigation'
@@ -54,12 +54,12 @@ const galleryMedia = [
 ]
 
 const categories = [
-  { id: 'all', label: 'All Media', icon: Camera },
-  { id: 'family', label: 'Family', icon: Camera },
-  { id: 'service', label: 'Service', icon: Camera },
-  { id: 'adventures', label: 'Adventures', icon: Video },
-  { id: 'friends', label: 'Friends', icon: Camera },
-  { id: 'milestones', label: 'Milestones', icon: Camera },
+  { id: 'all', label: 'All Media', icon: Images },
+  { id: 'family', label: 'Family', icon: Heart },
+  { id: 'service', label: 'Service', icon: Shield },
+  { id: 'adventures', label: 'Adventures', icon: Compass },
+  { id: 'friends', label: 'Friends', icon: Users },
+  { id: 'milestones', label: 'Milestones', icon: Star },
 ]
 
 interface GalleryPageClientProps {
@@ -69,11 +69,14 @@ interface GalleryPageClientProps {
 
 export default function GalleryPageClient({ photoCount, videoCount }: GalleryPageClientProps) {
   const [activeCategory, setActiveCategory] = useState('all')
+  const [mediaType, setMediaType] = useState<'all' | 'photo' | 'video'>('all')
   const [selectedMedia, setSelectedMedia] = useState<number | null>(null)
 
-  const filteredMedia = activeCategory === 'all'
-    ? galleryMedia
-    : galleryMedia.filter(item => item.category === activeCategory)
+  const filteredMedia = galleryMedia.filter(item => {
+    const categoryMatch = activeCategory === 'all' || item.category === activeCategory
+    const typeMatch = mediaType === 'all' || item.type === mediaType
+    return categoryMatch && typeMatch
+  })
 
   const handlePrev = () => {
     if (selectedMedia === null) return
@@ -142,7 +145,8 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
       {/* Category Filter */}
       <section className="py-12 bg-warmstone-50">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex flex-wrap justify-center gap-3">
+          {/* Category Filters */}
+          <div className="flex flex-wrap justify-center gap-3 mb-6">
             {categories.map((category) => {
               const Icon = category.icon
               return (
@@ -160,6 +164,42 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
                 </button>
               )
             })}
+          </div>
+          
+          {/* Media Type Filters */}
+          <div className="flex justify-center gap-2">
+            <button
+              onClick={() => setMediaType('all')}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                mediaType === 'all'
+                  ? 'bg-ember-600 text-warmstone-50'
+                  : 'bg-warmstone-100 text-forest-600 hover:bg-warmstone-200'
+              }`}
+            >
+              All Types
+            </button>
+            <button
+              onClick={() => setMediaType('photo')}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                mediaType === 'photo'
+                  ? 'bg-ember-600 text-warmstone-50'
+                  : 'bg-warmstone-100 text-forest-600 hover:bg-warmstone-200'
+              }`}
+            >
+              <Camera size={14} />
+              Photos Only
+            </button>
+            <button
+              onClick={() => setMediaType('video')}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                mediaType === 'video'
+                  ? 'bg-ember-600 text-warmstone-50'
+                  : 'bg-warmstone-100 text-forest-600 hover:bg-warmstone-200'
+              }`}
+            >
+              <Video size={14} />
+              Videos Only
+            </button>
           </div>
         </div>
       </section>

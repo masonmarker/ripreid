@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, Mail, Camera, Video, ArrowRight } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Mail, Camera, Video, ArrowRight, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 
@@ -68,25 +68,29 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
         <AnimatedSection delay={0.1}>
           <div className="flex flex-wrap justify-center gap-3 mb-12">
             {[
-              { id: 'all', label: 'All' },
-              { id: 'family', label: 'Family' },
-              { id: 'service', label: 'Service' },
-              { id: 'adventures', label: 'Adventures' },
-              { id: 'friends', label: 'Friends' },
-              { id: 'milestones', label: 'Milestones' },
-            ].map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  activeCategory === category.id
-                    ? 'bg-forest-800 text-warmstone-50'
-                    : 'bg-warmstone-200 text-forest-700 hover:bg-warmstone-300'
-                }`}
-              >
-                {category.label}
-              </button>
-            ))}
+              { id: 'all', label: 'All', icon: Images },
+              { id: 'family', label: 'Family', icon: Heart },
+              { id: 'service', label: 'Service', icon: Shield },
+              { id: 'adventures', label: 'Adventures', icon: Compass },
+              { id: 'friends', label: 'Friends', icon: Users },
+              { id: 'milestones', label: 'Milestones', icon: Star },
+            ].map((category) => {
+              const Icon = category.icon
+              return (
+                <button
+                  key={category.id}
+                  onClick={() => setActiveCategory(category.id)}
+                  className={`flex items-center gap-2 px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    activeCategory === category.id
+                      ? 'bg-forest-800 text-warmstone-50'
+                      : 'bg-warmstone-200 text-forest-700 hover:bg-warmstone-300'
+                  }`}
+                >
+                  <Icon size={16} />
+                  {category.label}
+                </button>
+              )
+            })}
           </div>
         </AnimatedSection>
 
