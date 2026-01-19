@@ -1,17 +1,19 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, ExternalLink } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
+  // Same-page sections (left side)
   { href: '/#home', label: 'Home' },
   { href: '/#life', label: 'His Life' },
   { href: '/#service', label: 'Service' },
   { href: '/#passions', label: 'Passions' },
-  // { href: '/#gallery', label: 'Gallery' },
-  { href: '/gallery', label: 'Full Gallery', isGallery: true },
   { href: '/#legacy', label: 'Legacy' },
+  // Separate pages (right side)
+  { href: '/family', label: 'Family', isPage: true },
+  { href: '/gallery', label: 'Gallery', isPage: true, isGallery: true },
 ]
 
 interface NavigationProps {
@@ -58,11 +60,19 @@ export default function Navigation({ photoCount = 0, videoCount = 0 }: Navigatio
               <a
                 key={link.href}
                 href={link.href}
-                className={`text-sm font-medium tracking-wide transition-colors duration-300 hover:opacity-70 ${
+                className={`relative text-sm font-medium tracking-wide transition-colors duration-300 hover:opacity-70 ${
                   isScrolled ? 'text-forest-700' : 'text-white/90'
-                } ${'isGallery' in link && link.isGallery ? 'relative' : ''}`}
+                }`}
               >
                 {link.label}
+                {'isPage' in link && link.isPage && (
+                  <ExternalLink 
+                    size={10} 
+                    className={`absolute -top-1 -right-3 ${
+                      isScrolled ? 'text-forest-500' : 'text-white/60'
+                    }`} 
+                  />
+                )}
                 {'isGallery' in link && link.isGallery && hasMedia && (
                   <span className={`absolute -bottom-4 left-1/2 -translate-x-1/2 text-[10px] whitespace-nowrap ${
                     isScrolled ? 'text-forest-500' : 'text-white/70'
@@ -102,9 +112,12 @@ export default function Navigation({ photoCount = 0, videoCount = 0 }: Navigatio
                   key={link.href}
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="block py-2 text-forest-700 font-medium"
+                  className="flex items-center gap-2 py-2 text-forest-700 font-medium"
                 >
                   {link.label}
+                  {'isPage' in link && link.isPage && (
+                    <ExternalLink size={12} className="text-forest-500" />
+                  )}
                 </a>
               ))}
             </div>

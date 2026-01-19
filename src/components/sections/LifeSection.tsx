@@ -56,6 +56,50 @@ export default function LifeSection() {
           </AnimatedSection>
         </div>
 
+        {/* Family */}
+        <div className="mb-24">
+          <AnimatedSection delay={0.1}>
+            <div className="text-center mb-12">
+              <h3
+                className="text-2xl md:text-3xl font-serif text-forest-800"
+                style={{ fontFamily: 'Cormorant Garamond, serif' }}
+              >
+                His Family
+              </h3>
+              <p className="mt-4 text-forest-700 text-lg max-w-2xl mx-auto">
+                Reid was the middle of three brothers, surrounded by a loving family who meant everything to him.
+              </p>
+            </div>
+          </AnimatedSection>
+          
+          <AnimatedSection delay={0.2}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+              {/* Parents */}
+              <div className="text-center">
+                <MediaPlaceholder aspectRatio="square" label="Dad" className="mb-3" />
+                <h4 className="font-medium text-forest-800">David Marker</h4>
+                <p className="text-forest-600 text-sm">Father</p>
+              </div>
+              <div className="text-center">
+                <MediaPlaceholder aspectRatio="square" label="Mom" className="mb-3" />
+                <h4 className="font-medium text-forest-800">Brooke Blackwell</h4>
+                <p className="text-forest-600 text-sm">Mother</p>
+              </div>
+              {/* Brothers */}
+              <div className="text-center">
+                <MediaPlaceholder aspectRatio="square" label="Mason" className="mb-3" />
+                <h4 className="font-medium text-forest-800">Mason Marker</h4>
+                <p className="text-forest-600 text-sm">Older Brother</p>
+              </div>
+              <div className="text-center">
+                <MediaPlaceholder aspectRatio="square" label="Langdon" className="mb-3" />
+                <h4 className="font-medium text-forest-800">Langdon Marker</h4>
+                <p className="text-forest-600 text-sm">Younger Brother</p>
+              </div>
+            </div>
+          </AnimatedSection>
+        </div>
+
         {/* High School Years */}
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
           <AnimatedSection delay={0.1} className="order-2 lg:order-1">
