@@ -2,41 +2,32 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, Mail, Camera, Video } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Mail, Camera, Video, ArrowRight } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 
-const galleryMedia = [
-  { id: 1, label: 'Portrait', category: 'portraits', type: 'photo' as const },
-  { id: 2, label: 'Family', category: 'family', type: 'photo' as const },
-  { id: 3, label: 'Army', category: 'service', type: 'photo' as const },
-  { id: 4, label: 'Football', category: 'sports', type: 'photo' as const },
-  { id: 5, label: 'Outdoors', category: 'adventures', type: 'video' as const },
-  { id: 6, label: 'Friends', category: 'friends', type: 'photo' as const },
-  { id: 7, label: 'Brothers', category: 'family', type: 'photo' as const },
-  { id: 8, label: 'Graduation', category: 'milestones', type: 'photo' as const },
-  { id: 9, label: 'Fishing', category: 'adventures', type: 'video' as const },
-  { id: 10, label: 'Uniform', category: 'service', type: 'photo' as const },
-  { id: 11, label: 'Smile', category: 'portraits', type: 'photo' as const },
-  { id: 12, label: 'Adventure', category: 'adventures', type: 'video' as const },
+const galleryPreview = [
+  { id: 1, label: 'Family', category: 'family', type: 'photo' as const },
+  { id: 2, label: 'In Uniform', category: 'service', type: 'photo' as const },
+  { id: 3, label: 'Fishing Trip', category: 'adventures', type: 'video' as const },
+  { id: 4, label: 'Football', category: 'friends', type: 'photo' as const },
+  { id: 5, label: 'Graduation', category: 'milestones', type: 'photo' as const },
+  { id: 6, label: 'Brothers', category: 'family', type: 'photo' as const },
+  { id: 7, label: 'Adventure', category: 'adventures', type: 'video' as const },
+  { id: 8, label: 'Best Friends', category: 'friends', type: 'photo' as const },
 ]
 
-const categories = [
-  { id: 'all', label: 'All' },
-  { id: 'portraits', label: 'Portraits' },
-  { id: 'family', label: 'Family' },
-  { id: 'service', label: 'Service' },
-  { id: 'adventures', label: 'Adventures' },
-  { id: 'friends', label: 'Friends' },
-]
+interface GallerySectionProps {
+  mediaCount?: number
+}
 
-export default function GallerySection() {
+export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) {
   const [activeCategory, setActiveCategory] = useState('all')
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
   const filteredMedia = activeCategory === 'all'
-    ? galleryMedia
-    : galleryMedia.filter(item => item.category === activeCategory)
+    ? galleryPreview
+    : galleryPreview.filter(item => item.category === activeCategory)
 
   const handlePrev = () => {
     if (selectedImage === null) return
@@ -76,7 +67,14 @@ export default function GallerySection() {
         {/* Category Filter */}
         <AnimatedSection delay={0.1}>
           <div className="flex flex-wrap justify-center gap-3 mb-12">
-            {categories.map((category) => (
+            {[
+              { id: 'all', label: 'All' },
+              { id: 'family', label: 'Family' },
+              { id: 'service', label: 'Service' },
+              { id: 'adventures', label: 'Adventures' },
+              { id: 'friends', label: 'Friends' },
+              { id: 'milestones', label: 'Milestones' },
+            ].map((category) => (
               <button
                 key={category.id}
                 onClick={() => setActiveCategory(category.id)}
@@ -125,6 +123,27 @@ export default function GallerySection() {
           </motion.div>
         </AnimatedSection>
 
+        {/* View Full Gallery Button */}
+        <AnimatedSection delay={0.3}>
+          <div className="text-center mt-12">
+            <a
+              href="/gallery"
+              className="inline-flex items-center gap-3 px-8 py-4 bg-forest-800 text-warmstone-50 rounded-full font-medium text-lg hover:bg-forest-700 transition-colors duration-300 group"
+            >
+              <span>View Full Gallery</span>
+              <ArrowRight 
+                size={20} 
+                className="transition-transform duration-300 group-hover:translate-x-1" 
+              />
+            </a>
+            {mediaCount > 0 && (
+              <p className="text-forest-600 text-sm mt-4">
+                Browse {mediaCount} photos and videos
+              </p>
+            )}
+          </div>
+        </AnimatedSection>
+
         {/* Lightbox */}
         <AnimatePresence>
           {selectedImage !== null && (
@@ -164,7 +183,7 @@ export default function GallerySection() {
                 className="max-w-4xl w-full"
               >
                 {(() => {
-                  const selectedItem = galleryMedia.find(item => item.id === selectedImage)
+                  const selectedItem = galleryPreview.find(item => item.id === selectedImage)
                   return (
                     <MediaPlaceholder 
                       aspectRatio="landscape" 

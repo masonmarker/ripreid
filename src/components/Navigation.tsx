@@ -5,12 +5,13 @@ import { Menu, X } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const navLinks = [
-  { href: '#home', label: 'Home' },
-  { href: '#life', label: 'His Life' },
-  { href: '#service', label: 'Service' },
-  { href: '#passions', label: 'Passions' },
-  { href: '#gallery', label: 'Gallery' },
-  { href: '#legacy', label: 'Legacy' },
+  { href: '/#home', label: 'Home' },
+  { href: '/#life', label: 'His Life' },
+  { href: '/#service', label: 'Service' },
+  { href: '/#passions', label: 'Passions' },
+  // { href: '/#gallery', label: 'Gallery' },
+  { href: '/gallery', label: 'Full Gallery' },
+  { href: '/#legacy', label: 'Legacy' },
 ]
 
 export default function Navigation() {
@@ -36,7 +37,7 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 lg:h-20">
           <a
-            href="#home"
+            href="/"
             className={`font-serif text-xl lg:text-2xl font-medium transition-colors duration-300 ${
               isScrolled ? 'text-forest-800' : 'text-white'
             }`}
