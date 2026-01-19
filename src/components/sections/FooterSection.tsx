@@ -21,12 +21,21 @@ export default function FooterSection() {
             <Heart className="w-4 h-4 text-ember-400" fill="currentColor" />
             <span className="w-12 h-px bg-warmstone-600" />
           </div>
-          <p className="text-warmstone-300 italic max-w-xl mx-auto mb-8" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+          {/* <p className="text-warmstone-300 italic max-w-xl mx-auto mb-8" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
             &ldquo;He had an infectious laugh, the heart of a lion, and the gentleness of a lamb.&rdquo;
+          </p> */}
+          <p className="text-warmstone-300 text-lg italic mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+            &ldquo;Love you, bye.&rdquo;
           </p>
-          <p className="text-warmstone-500 text-sm">
+          {/* <p className="text-warmstone-500 text-sm">
             Forever loved. Never forgotten.
-          </p>
+          </p> */}
+          
+          <div className="mt-12 pt-8 border-t border-warmstone-700/50">
+            <p className="text-warmstone-500 text-xs">
+              Created with love by Reid&apos;s brother, Mason
+            </p>
+          </div>
         </div>
       </div>
     </footer>

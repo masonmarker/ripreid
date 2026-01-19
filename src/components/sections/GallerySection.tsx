@@ -2,27 +2,27 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { X, ChevronLeft, ChevronRight, Mail, Camera, Video } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
-import PhotoPlaceholder from '../PhotoPlaceholder'
+import MediaPlaceholder from '../MediaPlaceholder'
 
-const galleryImages = [
-  { id: 1, label: 'Portrait', category: 'portraits' },
-  { id: 2, label: 'Family', category: 'family' },
-  { id: 3, label: 'Army', category: 'service' },
-  { id: 4, label: 'Football', category: 'sports' },
-  { id: 5, label: 'Outdoors', category: 'adventures' },
-  { id: 6, label: 'Friends', category: 'friends' },
-  { id: 7, label: 'Brothers', category: 'family' },
-  { id: 8, label: 'Graduation', category: 'milestones' },
-  { id: 9, label: 'Fishing', category: 'adventures' },
-  { id: 10, label: 'Uniform', category: 'service' },
-  { id: 11, label: 'Smile', category: 'portraits' },
-  { id: 12, label: 'Adventure', category: 'adventures' },
+const galleryMedia = [
+  { id: 1, label: 'Portrait', category: 'portraits', type: 'photo' as const },
+  { id: 2, label: 'Family', category: 'family', type: 'photo' as const },
+  { id: 3, label: 'Army', category: 'service', type: 'photo' as const },
+  { id: 4, label: 'Football', category: 'sports', type: 'photo' as const },
+  { id: 5, label: 'Outdoors', category: 'adventures', type: 'video' as const },
+  { id: 6, label: 'Friends', category: 'friends', type: 'photo' as const },
+  { id: 7, label: 'Brothers', category: 'family', type: 'photo' as const },
+  { id: 8, label: 'Graduation', category: 'milestones', type: 'photo' as const },
+  { id: 9, label: 'Fishing', category: 'adventures', type: 'video' as const },
+  { id: 10, label: 'Uniform', category: 'service', type: 'photo' as const },
+  { id: 11, label: 'Smile', category: 'portraits', type: 'photo' as const },
+  { id: 12, label: 'Adventure', category: 'adventures', type: 'video' as const },
 ]
 
 const categories = [
-  { id: 'all', label: 'All Photos' },
+  { id: 'all', label: 'All' },
   { id: 'portraits', label: 'Portraits' },
   { id: 'family', label: 'Family' },
   { id: 'service', label: 'Service' },
@@ -34,22 +34,22 @@ export default function GallerySection() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
 
-  const filteredImages = activeCategory === 'all'
-    ? galleryImages
-    : galleryImages.filter(img => img.category === activeCategory)
+  const filteredMedia = activeCategory === 'all'
+    ? galleryMedia
+    : galleryMedia.filter(item => item.category === activeCategory)
 
   const handlePrev = () => {
     if (selectedImage === null) return
-    const currentIndex = filteredImages.findIndex(img => img.id === selectedImage)
-    const prevIndex = currentIndex > 0 ? currentIndex - 1 : filteredImages.length - 1
-    setSelectedImage(filteredImages[prevIndex].id)
+    const currentIndex = filteredMedia.findIndex(item => item.id === selectedImage)
+    const prevIndex = currentIndex > 0 ? currentIndex - 1 : filteredMedia.length - 1
+    setSelectedImage(filteredMedia[prevIndex].id)
   }
 
   const handleNext = () => {
     if (selectedImage === null) return
-    const currentIndex = filteredImages.findIndex(img => img.id === selectedImage)
-    const nextIndex = currentIndex < filteredImages.length - 1 ? currentIndex + 1 : 0
-    setSelectedImage(filteredImages[nextIndex].id)
+    const currentIndex = filteredMedia.findIndex(item => item.id === selectedImage)
+    const nextIndex = currentIndex < filteredMedia.length - 1 ? currentIndex + 1 : 0
+    setSelectedImage(filteredMedia[nextIndex].id)
   }
 
   return (
@@ -64,7 +64,7 @@ export default function GallerySection() {
               className="mt-4 text-4xl md:text-5xl lg:text-6xl font-serif text-forest-900"
               style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
-              Photo Gallery
+              Photos &amp; Videos
             </h2>
             <p className="mt-4 text-forest-700 text-lg max-w-2xl mx-auto">
               A collection of moments that capture Reid&apos;s spirit, his adventures, 
@@ -99,21 +99,22 @@ export default function GallerySection() {
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"
           >
             <AnimatePresence mode="popLayout">
-              {filteredImages.map((image) => (
+              {filteredMedia.map((item) => (
                 <motion.div
-                  key={image.id}
+                  key={item.id}
                   layout
                   initial={{ opacity: 0, scale: 0.9 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
-                  onClick={() => setSelectedImage(image.id)}
+                  onClick={() => setSelectedImage(item.id)}
                   className="cursor-pointer group"
                 >
                   <div className="relative overflow-hidden rounded-lg">
-                    <PhotoPlaceholder 
+                    <MediaPlaceholder 
                       aspectRatio="square" 
-                      label={image.label}
+                      label={item.label}
+                      type={item.type}
                       className="transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-300" />
@@ -162,15 +163,69 @@ export default function GallerySection() {
                 onClick={(e) => e.stopPropagation()}
                 className="max-w-4xl w-full"
               >
-                <PhotoPlaceholder 
-                  aspectRatio="landscape" 
-                  label={galleryImages.find(img => img.id === selectedImage)?.label || 'Photo'}
-                  className="w-full h-auto min-h-[400px]"
-                />
+                {(() => {
+                  const selectedItem = galleryMedia.find(item => item.id === selectedImage)
+                  return (
+                    <MediaPlaceholder 
+                      aspectRatio="landscape" 
+                      label={selectedItem?.label || 'Media'}
+                      type={selectedItem?.type || 'photo'}
+                      className="w-full h-auto min-h-[400px]"
+                    />
+                  )
+                })()}
               </motion.div>
             </motion.div>
           )}
         </AnimatePresence>
+
+        {/* Submit Your Memories */}
+        <AnimatedSection delay={0.3}>
+          <div className="mt-20 bg-gradient-to-br from-forest-800 to-forest-900 rounded-2xl p-8 md:p-12 text-center">
+            <div className="flex justify-center gap-3 mb-6">
+              <Camera className="w-6 h-6 text-warmstone-300" />
+              <Video className="w-6 h-6 text-warmstone-300" />
+            </div>
+            <h3
+              className="text-2xl md:text-3xl font-serif text-warmstone-100 mb-4"
+              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            >
+              Share Your Memories
+            </h3>
+            <p className="text-warmstone-300 text-lg mb-8 max-w-xl mx-auto">
+              Have a photo or video of Reid? His family would love to add your memories to this collection.
+            </p>
+            
+            <div className="bg-forest-950/40 rounded-xl p-6 md:p-8 max-w-lg mx-auto text-left">
+              <div className="flex items-center gap-3 mb-4">
+                <Mail className="w-5 h-5 text-warmstone-400" />
+                <span className="text-warmstone-200 font-medium">Email your photo/video to:</span>
+              </div>
+              <a 
+                href="mailto:mason1marker@gmail.com" 
+                className="text-xl md:text-2xl text-warmstone-100 font-medium hover:text-warmstone-300 transition-colors block mb-6"
+              >
+                mason1marker@gmail.com
+              </a>
+              
+              <p className="text-warmstone-300 mb-4">Please include:</p>
+              <ul className="space-y-2 text-warmstone-300">
+                <li className="flex items-start gap-2">
+                  <span className="text-warmstone-500">•</span>
+                  <span><strong className="text-warmstone-200">Your name</strong> or @handle on social media</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-warmstone-500">•</span>
+                  <span><strong className="text-warmstone-200">A short caption</strong> about the memory</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-warmstone-500">•</span>
+                  <span><strong className="text-warmstone-200">Where it was taken</strong> <span className="text-warmstone-500">(optional)</span></span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </AnimatedSection>
       </div>
     </section>
   )

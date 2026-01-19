@@ -2,7 +2,7 @@
 
 import { Shield, Award, Star, Medal } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
-import PhotoPlaceholder from '../PhotoPlaceholder'
+import MediaPlaceholder from '../MediaPlaceholder'
 
 export default function ServiceSection() {
   return (
@@ -47,9 +47,9 @@ export default function ServiceSection() {
           </AnimatedSection>
           <AnimatedSection delay={0.2}>
             <div className="grid grid-cols-2 gap-4">
-              <PhotoPlaceholder aspectRatio="portrait" label="In Uniform" className="col-span-2" />
-              <PhotoPlaceholder aspectRatio="square" label="Service" />
-              <PhotoPlaceholder aspectRatio="square" label="Deployment" />
+              <MediaPlaceholder aspectRatio="portrait" label="In Uniform" className="col-span-2" />
+              <MediaPlaceholder aspectRatio="square" label="Service" />
+              <MediaPlaceholder aspectRatio="square" label="Deployment" />
             </div>
           </AnimatedSection>
         </div>

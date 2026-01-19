@@ -1,7 +1,7 @@
 'use client'
 
 import AnimatedSection from '../AnimatedSection'
-import PhotoPlaceholder from '../PhotoPlaceholder'
+import MediaPlaceholder from '../MediaPlaceholder'
 
 export default function LifeSection() {
   return (
@@ -47,10 +47,10 @@ export default function LifeSection() {
           </AnimatedSection>
           <AnimatedSection delay={0.2}>
             <div className="grid grid-cols-2 gap-4">
-              <PhotoPlaceholder aspectRatio="portrait" label="Young Reid" className="col-span-1" />
+              <MediaPlaceholder aspectRatio="portrait" label="Young Reid" className="col-span-1" />
               <div className="space-y-4">
-                <PhotoPlaceholder aspectRatio="square" label="Family" />
-                <PhotoPlaceholder aspectRatio="square" label="Childhood" />
+                <MediaPlaceholder aspectRatio="square" label="Family" />
+                <MediaPlaceholder aspectRatio="square" label="Childhood" />
               </div>
             </div>
           </AnimatedSection>
@@ -60,10 +60,10 @@ export default function LifeSection() {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center mb-24">
           <AnimatedSection delay={0.1} className="order-2 lg:order-1">
             <div className="grid grid-cols-3 gap-4">
-              <PhotoPlaceholder aspectRatio="square" label="Football" />
-              <PhotoPlaceholder aspectRatio="square" label="Friends" />
-              <PhotoPlaceholder aspectRatio="square" label="School" />
-              <PhotoPlaceholder aspectRatio="landscape" label="Team Photo" className="col-span-3" />
+              <MediaPlaceholder aspectRatio="square" label="Football" />
+              <MediaPlaceholder aspectRatio="square" label="Friends" />
+              <MediaPlaceholder aspectRatio="square" label="School" />
+              <MediaPlaceholder aspectRatio="landscape" label="Team Photo" className="col-span-3" />
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.2} className="order-1 lg:order-2">
@@ -98,12 +98,12 @@ export default function LifeSection() {
         <AnimatedSection>
           <div className="bg-gradient-to-br from-forest-800 to-forest-900 rounded-2xl p-8 md:p-12 lg:p-16 text-center">
             <blockquote
-              className="text-2xl md:text-3xl lg:text-4xl font-serif text-warmstone-100 leading-relaxed"
+              className="text-3xl md:text-4xl lg:text-5xl font-serif text-warmstone-100 leading-relaxed"
               style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
-              &ldquo;He never met a stranger, loved ice cream, and the ocean. 
-              His bear hugs were unmatched.&rdquo;
+              &ldquo;Forge your own path.&rdquo;
             </blockquote>
+            <p className="mt-6 text-warmstone-400 text-lg">— Reid</p>
           </div>
         </AnimatedSection>
       </div>

@@ -2,7 +2,7 @@
 
 import { Fish, Target, Truck, Bike, Flame, TreePine, Heart, IceCream, Waves } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
-import PhotoPlaceholder from '../PhotoPlaceholder'
+import MediaPlaceholder from '../MediaPlaceholder'
 
 const passions = [
   { icon: Fish, label: 'Fishing', description: 'Peaceful mornings on the water' },
@@ -60,25 +60,25 @@ export default function PassionsSection() {
         {/* Photo Gallery for Passions */}
         <div className="grid lg:grid-cols-3 gap-6 mb-20">
           <AnimatedSection delay={0.2} className="lg:col-span-2">
-            <PhotoPlaceholder aspectRatio="wide" label="Fishing Trip" className="h-full min-h-[300px]" />
+            <MediaPlaceholder aspectRatio="wide" label="Fishing Trip" className="h-full min-h-[300px]" />
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
             <div className="grid grid-rows-2 gap-6 h-full">
-              <PhotoPlaceholder aspectRatio="landscape" label="Hunting" />
-              <PhotoPlaceholder aspectRatio="landscape" label="Truck" />
+              <MediaPlaceholder aspectRatio="landscape" label="Hunting" />
+              <MediaPlaceholder aspectRatio="landscape" label="Truck" />
             </div>
           </AnimatedSection>
         </div>
 
         <div className="grid md:grid-cols-3 gap-6 mb-20">
           <AnimatedSection delay={0.2}>
-            <PhotoPlaceholder aspectRatio="square" label="Dirt Bike" />
+            <MediaPlaceholder aspectRatio="square" label="Dirt Bike" />
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
-            <PhotoPlaceholder aspectRatio="square" label="Bonfire" />
+            <MediaPlaceholder aspectRatio="square" label="Bonfire" />
           </AnimatedSection>
           <AnimatedSection delay={0.4}>
-            <PhotoPlaceholder aspectRatio="square" label="Beach" />
+            <MediaPlaceholder aspectRatio="square" label="Beach" />
           </AnimatedSection>
         </div>
 
@@ -109,9 +109,9 @@ export default function PassionsSection() {
                 </p>
               </div>
               <div className="grid grid-cols-2 gap-4">
-                <PhotoPlaceholder aspectRatio="square" label="Brothers" />
-                <PhotoPlaceholder aspectRatio="square" label="Friends" />
-                <PhotoPlaceholder aspectRatio="landscape" label="Family Gathering" className="col-span-2" />
+                <MediaPlaceholder aspectRatio="square" label="Brothers" />
+                <MediaPlaceholder aspectRatio="square" label="Friends" />
+                <MediaPlaceholder aspectRatio="landscape" label="Family Gathering" className="col-span-2" />
               </div>
             </div>
           </div>

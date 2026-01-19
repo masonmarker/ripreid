@@ -2,7 +2,7 @@
 
 import { Cross, Heart, Users, MapPin } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
-import PhotoPlaceholder from '../PhotoPlaceholder'
+import MediaPlaceholder from '../MediaPlaceholder'
 
 const familyMembers = [
   { relation: 'Parents', names: 'David Edward Marker & Brooke Nicole Blackwell' },
@@ -74,9 +74,9 @@ export default function LegacySection() {
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">
-              <PhotoPlaceholder aspectRatio="square" label="With Parents" />
-              <PhotoPlaceholder aspectRatio="square" label="Brothers" />
-              <PhotoPlaceholder aspectRatio="landscape" label="Extended Family" className="col-span-2" />
+              <MediaPlaceholder aspectRatio="square" label="With Parents" />
+              <MediaPlaceholder aspectRatio="square" label="Brothers" />
+              <MediaPlaceholder aspectRatio="landscape" label="Extended Family" className="col-span-2" />
             </div>
           </div>
         </AnimatedSection>
