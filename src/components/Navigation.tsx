@@ -63,6 +63,7 @@ export default function Navigation({ photoCount = 0, videoCount = 0 }: Navigatio
                 className={`relative text-sm font-medium tracking-wide transition-colors duration-300 hover:opacity-70 ${
                   isScrolled ? 'text-forest-700' : 'text-white/90'
                 }`}
+                {...('isPage' in link && link.isPage && { target: '_blank', rel: 'noopener noreferrer' })}
               >
                 {link.label}
                 {'isPage' in link && link.isPage && (
@@ -113,6 +114,7 @@ export default function Navigation({ photoCount = 0, videoCount = 0 }: Navigatio
                   href={link.href}
                   onClick={() => setIsMobileMenuOpen(false)}
                   className="flex items-center gap-2 py-2 text-forest-700 font-medium"
+                  {...('isPage' in link && link.isPage && { target: '_blank', rel: 'noopener noreferrer' })}
                 >
                   {link.label}
                   {'isPage' in link && link.isPage && (

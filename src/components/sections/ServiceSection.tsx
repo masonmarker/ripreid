@@ -40,7 +40,7 @@ export default function ServiceSection() {
               </p>
               <p className="text-warmstone-200 leading-relaxed text-lg">
                 Reid was soon to be promoted to Military Police Investigator (MPI), a testament 
-                to his outstanding performance and potential. He will be laid to rest with full 
+                to his outstanding performance and potential. He was laid to rest with full 
                 military honors in Arlington National Cemetery.
               </p>
             </div>
