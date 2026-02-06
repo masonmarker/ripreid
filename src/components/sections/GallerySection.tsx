@@ -1,22 +1,19 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, ArrowRight, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 import ShareMemoryBanner from '../ShareMemoryBanner'
 
-const galleryPreview = [
-  { id: 1, label: 'Family', category: 'family', type: 'photo' as const },
-  { id: 2, label: 'In Uniform', category: 'service', type: 'photo' as const },
-  { id: 3, label: 'Fishing Trip', category: 'adventures', type: 'video' as const },
-  { id: 4, label: 'Football', category: 'friends', type: 'photo' as const },
-  { id: 5, label: 'Graduation', category: 'milestones', type: 'photo' as const },
-  { id: 6, label: 'Brothers', category: 'family', type: 'photo' as const },
-  { id: 7, label: 'Adventure', category: 'adventures', type: 'video' as const },
-  { id: 8, label: 'Best Friends', category: 'friends', type: 'photo' as const },
-]
+interface MediaItem {
+  id: string
+  label: string
+  category: string
+  type: 'photo' | 'video'
+  src: string
+}
 
 interface GallerySectionProps {
   mediaCount?: number
@@ -24,11 +21,31 @@ interface GallerySectionProps {
 
 export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) {
   const [activeCategory, setActiveCategory] = useState('all')
-  const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [galleryMedia, setGalleryMedia] = useState<MediaItem[]>([])
+  const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    async function fetchMedia() {
+      try {
+        const response = await fetch('/api/media')
+        const data = await response.json()
+        setGalleryMedia(data.media || [])
+      } catch (error) {
+        console.error('Failed to fetch media:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchMedia()
+  }, [])
+
+  // Show only first 8 items for preview
+  const previewMedia = galleryMedia.slice(0, 8)
   const filteredMedia = activeCategory === 'all'
-    ? galleryPreview
-    : galleryPreview.filter(item => item.category === activeCategory)
+    ? previewMedia
+    : previewMedia.filter(item => item.category === activeCategory)
 
   const handlePrev = () => {
     if (selectedImage === null) return
@@ -42,6 +59,18 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
     const currentIndex = filteredMedia.findIndex(item => item.id === selectedImage)
     const nextIndex = currentIndex < filteredMedia.length - 1 ? currentIndex + 1 : 0
     setSelectedImage(filteredMedia[nextIndex].id)
+  }
+
+  if (loading) {
+    return (
+      <section id="gallery" className="py-24 lg:py-32 bg-warmstone-50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-8">
+          <div className="flex items-center justify-center min-h-[50vh]">
+            <div className="text-forest-600">Loading gallery...</div>
+          </div>
+        </div>
+      </section>
+    )
   }
 
   return (
@@ -118,6 +147,7 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
                       aspectRatio="square" 
                       label={item.label}
                       type={item.type}
+                      src={item.src}
                       className="transition-transform duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-300" />
@@ -188,13 +218,28 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
                 className="max-w-4xl w-full"
               >
                 {(() => {
-                  const selectedItem = galleryPreview.find(item => item.id === selectedImage)
+                  const selectedItem = galleryMedia.find(item => item.id === selectedImage)
+                  if (!selectedItem) return null
+                  
+                  if (selectedItem.type === 'video') {
+                    return (
+                      <video
+                        src={selectedItem.src}
+                        controls
+                        autoPlay
+                        muted
+                        loop
+                        playsInline
+                        className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+                      />
+                    )
+                  }
+                  
                   return (
-                    <MediaPlaceholder 
-                      aspectRatio="landscape" 
-                      label={selectedItem?.label || 'Media'}
-                      type={selectedItem?.type || 'photo'}
-                      className="w-full h-auto min-h-[400px]"
+                    <img
+                      src={selectedItem.src}
+                      alt={selectedItem.label}
+                      className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
                     />
                   )
                 })()}

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { X, ChevronLeft, ChevronRight, Camera, Video, ArrowLeft, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
 import AnimatedSection from '@/components/AnimatedSection'
@@ -9,51 +9,13 @@ import Navigation from '@/components/Navigation'
 import FooterSection from '@/components/sections/FooterSection'
 import ShareMemoryBanner from '@/components/ShareMemoryBanner'
 
-const galleryMedia = [
-  // Family
-  { id: 1, label: 'Young Reid', category: 'family', type: 'photo' as const },
-  { id: 2, label: 'With Parents', category: 'family', type: 'photo' as const },
-  { id: 3, label: 'Brothers', category: 'family', type: 'photo' as const },
-  { id: 4, label: 'Family Gathering', category: 'family', type: 'video' as const },
-  { id: 5, label: 'Childhood Memories', category: 'family', type: 'photo' as const },
-  { id: 6, label: 'Extended Family', category: 'family', type: 'photo' as const },
-  { id: 7, label: 'Holiday Together', category: 'family', type: 'photo' as const },
-  { id: 8, label: 'Family Portrait', category: 'family', type: 'photo' as const },
-  
-  // Service
-  { id: 9, label: 'In Uniform', category: 'service', type: 'photo' as const },
-  { id: 10, label: 'Basic Training', category: 'service', type: 'video' as const },
-  { id: 11, label: 'Fort Drum', category: 'service', type: 'photo' as const },
-  { id: 12, label: 'Deployment', category: 'service', type: 'photo' as const },
-  { id: 13, label: 'Military Police', category: 'service', type: 'photo' as const },
-  { id: 14, label: 'Award Ceremony', category: 'service', type: 'photo' as const },
-  { id: 15, label: 'Service Photos', category: 'service', type: 'photo' as const },
-  { id: 16, label: 'Army Life', category: 'service', type: 'video' as const },
-  
-  // Adventures
-  { id: 17, label: 'Fishing Trip', category: 'adventures', type: 'video' as const },
-  { id: 18, label: 'Hunting', category: 'adventures', type: 'photo' as const },
-  { id: 19, label: 'Dirt Bike', category: 'adventures', type: 'video' as const },
-  { id: 20, label: 'Truck', category: 'adventures', type: 'photo' as const },
-  { id: 21, label: 'Bonfire', category: 'adventures', type: 'photo' as const },
-  { id: 22, label: 'Ocean', category: 'adventures', type: 'photo' as const },
-  { id: 23, label: 'Camping', category: 'adventures', type: 'photo' as const },
-  { id: 24, label: 'Adventure', category: 'adventures', type: 'video' as const },
-  
-  // Friends
-  { id: 25, label: 'Football Team', category: 'friends', type: 'photo' as const },
-  { id: 26, label: 'High School', category: 'friends', type: 'photo' as const },
-  { id: 27, label: 'Best Friends', category: 'friends', type: 'photo' as const },
-  { id: 28, label: 'Sherando Friends', category: 'friends', type: 'photo' as const },
-  { id: 29, label: 'Team Photos', category: 'friends', type: 'photo' as const },
-  { id: 30, label: 'Friend Memories', category: 'friends', type: 'video' as const },
-  
-  // Milestones
-  { id: 31, label: 'Graduation', category: 'milestones', type: 'photo' as const },
-  { id: 32, label: 'Prom', category: 'milestones', type: 'photo' as const },
-  { id: 33, label: 'Birthday', category: 'milestones', type: 'photo' as const },
-  { id: 34, label: 'Celebration', category: 'milestones', type: 'photo' as const },
-]
+interface MediaItem {
+  id: string
+  label: string
+  category: string
+  type: 'photo' | 'video'
+  src: string
+}
 
 const categories = [
   { id: 'all', label: 'All Media', icon: Images },
@@ -72,7 +34,25 @@ interface GalleryPageClientProps {
 export default function GalleryPageClient({ photoCount, videoCount }: GalleryPageClientProps) {
   const [activeCategory, setActiveCategory] = useState('all')
   const [mediaType, setMediaType] = useState<'all' | 'photo' | 'video'>('all')
-  const [selectedMedia, setSelectedMedia] = useState<number | null>(null)
+  const [selectedMedia, setSelectedMedia] = useState<string | null>(null)
+  const [galleryMedia, setGalleryMedia] = useState<MediaItem[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    async function fetchMedia() {
+      try {
+        const response = await fetch('/api/media')
+        const data = await response.json()
+        setGalleryMedia(data.media || [])
+      } catch (error) {
+        console.error('Failed to fetch media:', error)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchMedia()
+  }, [])
 
   const filteredMedia = galleryMedia.filter(item => {
     const categoryMatch = activeCategory === 'all' || item.category === activeCategory
@@ -95,6 +75,17 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
   }
 
   const hasMedia = photoCount > 0 || videoCount > 0
+
+  if (loading) {
+    return (
+      <main className="bg-warmstone-50 min-h-screen">
+        <Navigation photoCount={photoCount} videoCount={videoCount} />
+        <div className="flex items-center justify-center min-h-[50vh]">
+          <div className="text-forest-600">Loading gallery...</div>
+        </div>
+      </main>
+    )
+  }
 
   return (
     <main className="bg-warmstone-50 min-h-screen">
@@ -231,6 +222,7 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
                         aspectRatio="square" 
                         label={item.label}
                         type={item.type}
+                        src={item.src}
                         className="transition-transform duration-500 group-hover:scale-105"
                       />
                       <div className="absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-300" />
@@ -288,12 +280,27 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
             >
               {(() => {
                 const selectedItem = galleryMedia.find(item => item.id === selectedMedia)
+                if (!selectedItem) return null
+                
+                if (selectedItem.type === 'video') {
+                  return (
+                    <video
+                      src={selectedItem.src}
+                      controls
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+                    />
+                  )
+                }
+                
                 return (
-                  <MediaPlaceholder 
-                    aspectRatio="landscape" 
-                    label={selectedItem?.label || 'Media'}
-                    type={selectedItem?.type || 'photo'}
-                    className="w-full h-auto min-h-[400px]"
+                  <img
+                    src={selectedItem.src}
+                    alt={selectedItem.label}
+                    className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
                   />
                 )
               })()}

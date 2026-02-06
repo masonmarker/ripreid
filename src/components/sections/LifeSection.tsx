@@ -185,13 +185,14 @@ export default function LifeSection() {
                 <a
                   href="https://www.wwnytv.com/2025/10/27/town-orleans-crash-claims-life-virginia-man/"
                   target="_blank"
-                  style={{ textDecoration: "underline" }}
+                  className="text-blue-600 hover:text-blue-800 underline"
                 >
                   single-car accident
                 </a>
-                . He was the passenger. In an instant, the world lost a bright
-                light—a son, a brother, a soldier, and a friend who touched
-                countless lives with his warmth and joy.
+                . He was the passenger, and a victim of severly reckless
+                driving. In an instant, the world lost a bright light, a son, a
+                brother, a soldier, and a friend who touched countless lives
+                with his warmth and joy.
               </p>
               <p className="text-forest-700 leading-relaxed text-lg">
                 Though his time with us was far too short, Reid lived more fully
@@ -199,6 +200,16 @@ export default function LifeSection() {
                 country with honor, loved his family fiercely, and never missed
                 a chance to make someone smile. His spirit, his laughter, and
                 his love will never be forgotten.
+              </p>
+              <br/>
+              <p className="text-forest-700 leading-relaxed text-lg">
+                <a
+                  href="https://www.wwnytv.com/2025/10/27/town-orleans-crash-claims-life-virginia-man/"
+                  target="_blank"
+                  className="text-blue-600 hover:text-blue-800 underline"
+                >
+                  Full Article
+                </a>
               </p>
             </div>
           </div>
