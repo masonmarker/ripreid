@@ -189,20 +189,9 @@ export default function LifeSection() {
                 >
                   single-car accident
                 </a>
-                . He was the passenger, and a victim of severly reckless
-                driving. In an instant, the world lost a bright light, a son, a
-                brother, a soldier, and a friend who touched countless lives
-                with his warmth and joy.
-              </p>
-              <p className="text-forest-700 leading-relaxed text-lg">
-                Though his time with us was far too short, Reid lived more fully
-                in his 20 years than many do in a lifetime. He served his
-                country with honor, loved his family fiercely, and never missed
-                a chance to make someone smile. His spirit, his laughter, and
-                his love will never be forgotten.
-              </p>
-              <br/>
-              <p className="text-forest-700 leading-relaxed text-lg">
+                . He was the passenger, and a victim of severely reckless
+                driving. The driver floored the accelerator to <b>91 mph</b> on a{" "}
+                backroad, made of gravel. The driver survived with no reprocussions.{" "}
                 <a
                   href="https://www.wwnytv.com/2025/10/27/town-orleans-crash-claims-life-virginia-man/"
                   target="_blank"
@@ -210,6 +199,18 @@ export default function LifeSection() {
                 >
                   Full Article
                 </a>
+              </p>
+              <p className="text-forest-700 leading-relaxed text-lg mb-6">
+                In an instant, the world lost a bright light, a son, a brother,
+                a soldier, and a friend who touched countless lives with his
+                warmth and joy.
+              </p>
+              <p className="text-forest-700 leading-relaxed text-lg">
+                Though his time with us was far too short, Reid lived more fully
+                in his 20 years than many do in a lifetime. He served his
+                country with honor, loved his family fiercely, and never missed
+                a chance to make someone smile. His spirit, his laughter, and
+                his love will never be forgotten.
               </p>
             </div>
           </div>
