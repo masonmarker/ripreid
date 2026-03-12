@@ -190,8 +190,7 @@ export default function LifeSection() {
                   single-car accident
                 </a>
                 . He was the passenger, and a victim of severely reckless
-                driving. The driver floored the accelerator to <b>91 mph</b> on a{" "}
-                backroad, made of gravel. The driver survived with no reprocussions.{" "}
+                driving.{" "}
                 <a
                   href="https://www.wwnytv.com/2025/10/27/town-orleans-crash-claims-life-virginia-man/"
                   target="_blank"
