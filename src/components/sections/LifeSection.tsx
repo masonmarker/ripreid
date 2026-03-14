@@ -255,7 +255,7 @@ export default function LifeSection() {
             >
               &ldquo;Forge your own path.&rdquo;
             </blockquote>
-            <p className="mt-6 text-warmstone-400 text-lg">,  Reid</p>
+            <p className="mt-6 text-warmstone-400 text-lg">- Reid</p>
           </div>
         </AnimatedSection>
       </div>
