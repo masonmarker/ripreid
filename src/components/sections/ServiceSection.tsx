@@ -1,10 +1,33 @@
 'use client'
 
-import { Shield, Award, Star, Medal } from 'lucide-react'
+import { useState } from 'react'
+import { Shield, Award, Star, Medal, X, ChevronLeft, ChevronRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 
 export default function ServiceSection() {
+  const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  
+  const serviceImages = [
+    { id: 1, src: '/pictures/service/img_8809.jpeg', label: 'In Uniform', type: 'photo' as const },
+    { id: 2, src: '/pictures/service/img_7629.png', label: 'Service', type: 'photo' as const },
+    { id: 3, src: '/pictures/service/img_7632.png', label: 'Deployment', type: 'photo' as const },
+  ]
+
+  const handlePrev = () => {
+    if (selectedImage === null) return
+    const currentIndex = serviceImages.findIndex(item => item.id === selectedImage)
+    const prevIndex = currentIndex > 0 ? currentIndex - 1 : serviceImages.length - 1
+    setSelectedImage(serviceImages[prevIndex].id)
+  }
+
+  const handleNext = () => {
+    if (selectedImage === null) return
+    const currentIndex = serviceImages.findIndex(item => item.id === selectedImage)
+    const nextIndex = currentIndex < serviceImages.length - 1 ? currentIndex + 1 : 0
+    setSelectedImage(serviceImages[nextIndex].id)
+  }
   return (
     <section id="service" className="py-24 lg:py-32 bg-forest-900 text-warmstone-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -47,9 +70,30 @@ export default function ServiceSection() {
           </AnimatedSection>
           <AnimatedSection delay={0.2}>
             <div className="grid grid-cols-2 gap-4">
-              <MediaPlaceholder aspectRatio="portrait" label="In Uniform" className="col-span-2" />
-              <MediaPlaceholder aspectRatio="square" label="Service" />
-              <MediaPlaceholder aspectRatio="square" label="Deployment" />
+              <div className="col-span-2 cursor-pointer group" onClick={() => setSelectedImage(1)}>
+                <MediaPlaceholder 
+                  aspectRatio="portrait" 
+                  label="In Uniform" 
+                  src="/pictures/service/img_8809.jpeg" 
+                  className="transition-transform duration-500 group-hover:scale-105" 
+                />
+              </div>
+              <div className="cursor-pointer group" onClick={() => setSelectedImage(2)}>
+                <MediaPlaceholder 
+                  aspectRatio="square" 
+                  label="Service" 
+                  src="/pictures/service/img_7629.png" 
+                  className="transition-transform duration-500 group-hover:scale-105" 
+                />
+              </div>
+              <div className="cursor-pointer group" onClick={() => setSelectedImage(3)}>
+                <MediaPlaceholder 
+                  aspectRatio="square" 
+                  label="Deployment" 
+                  src="/pictures/service/img_7632.png" 
+                  className="transition-transform duration-500 group-hover:scale-105" 
+                />
+              </div>
             </div>
           </AnimatedSection>
         </div>
@@ -114,6 +158,59 @@ export default function ServiceSection() {
           </div>
         </AnimatedSection>
       </div>
+      
+      {/* Lightbox */}
+      <AnimatePresence>
+        {selectedImage !== null && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-forest-950/95 flex items-center justify-center p-4"
+            onClick={() => setSelectedImage(null)}
+          >
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute top-6 right-6 text-warmstone-300 hover:text-warmstone-100 transition-colors"
+            >
+              <X size={32} />
+            </button>
+            
+            <button
+              onClick={(e) => { e.stopPropagation(); handlePrev(); }}
+              className="absolute left-4 md:left-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
+            >
+              <ChevronLeft size={40} />
+            </button>
+            
+            <button
+              onClick={(e) => { e.stopPropagation(); handleNext(); }}
+              className="absolute right-4 md:right-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
+            >
+              <ChevronRight size={40} />
+            </button>
+
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              onClick={(e) => e.stopPropagation()}
+              className="max-w-5xl w-full"
+            >
+              {(() => {
+                const selectedItem = serviceImages.find(item => item.id === selectedImage)
+                return (
+                  <img
+                    src={selectedItem?.src}
+                    alt={selectedItem?.label}
+                    className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
+                  />
+                )
+              })()}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

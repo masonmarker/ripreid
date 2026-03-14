@@ -21,7 +21,7 @@ const familyMembers = [
     id: 'mason',
     name: 'Mason Marker',
     role: 'Older Brother',
-    description: 'Mason, Reid\'s older brother, shared countless adventures and memories with him. Their brotherhood went beyond blood—they were best friends who looked out for each other through everything.',
+    description: 'Mason, Reid\'s older brother, shared countless adventures and memories with him. Their brotherhood went beyond blood, they were best friends who looked out for each other through everything.',
   },
   {
     id: 'langdon',
@@ -57,6 +57,10 @@ export default function FamilyPageClient() {
             </h1>
             <p className="text-warmstone-300 text-lg max-w-2xl mx-auto">
               The people who loved him most and shaped the incredible person he became.
+              <br /><br />
+              <span className="text-warmstone-200 font-medium">
+                David, Brooke, Mason, and Langdon
+              </span>
             </p>
           </div>
         </div>
@@ -69,7 +73,7 @@ export default function FamilyPageClient() {
             <div className="text-center">
               <p className="text-forest-700 text-lg leading-relaxed">
                 Reid was the middle of three brothers, born to David and Brooke in Winchester, Virginia. 
-                Family was everything to Reid—his parents provided the foundation of love and values that 
+                Family was everything to Reid, his parents provided the foundation of love and values that 
                 guided him, while his brothers Mason and Langdon were not just siblings but his closest 
                 friends and partners in every adventure.
               </p>
@@ -78,40 +82,26 @@ export default function FamilyPageClient() {
         </div>
       </section>
 
-      {/* Family Members */}
+      {/* Reid with Family Photos */}
       <section className="py-16 bg-warmstone-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            {familyMembers.map((member, index) => (
-              <AnimatedSection key={member.id} delay={index * 0.1}>
-                <div className="bg-warmstone-50 rounded-2xl overflow-hidden shadow-sm">
-                  <div className="aspect-[4/3] relative">
-                    <MediaPlaceholder 
-                      aspectRatio="landscape" 
-                      label={`Reid with ${member.name.split(' ')[0]}`}
-                      className="w-full h-full"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <h3 
-                        className="text-2xl font-serif text-forest-800"
-                        style={{ fontFamily: 'Cormorant Garamond, serif' }}
-                      >
-                        {member.name}
-                      </h3>
-                      <span className="px-3 py-1 bg-forest-100 text-forest-700 rounded-full text-sm font-medium">
-                        {member.role}
-                      </span>
-                    </div>
-                    <p className="text-forest-700 leading-relaxed">
-                      {member.description}
-                    </p>
-                  </div>
-                </div>
-              </AnimatedSection>
-            ))}
-          </div>
+          <AnimatedSection>
+            <h2
+              className="text-3xl md:text-4xl font-serif text-forest-800 mb-8 text-center"
+              style={{ fontFamily: 'Cormorant Garamond, serif' }}
+            >
+              Reid with His Family
+            </h2>
+          </AnimatedSection>
+          
+          <AnimatedSection delay={0.1}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              <MediaPlaceholder aspectRatio="square" label="Reid with Family" src="/pictures/family/img_5867.jpg" />
+              <MediaPlaceholder aspectRatio="square" label="Family Time" />
+              <MediaPlaceholder aspectRatio="square" label="Together" />
+              <MediaPlaceholder aspectRatio="square" label="Home" />
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 
@@ -127,7 +117,7 @@ export default function FamilyPageClient() {
                 The Three Brothers
               </h2>
               <p className="text-forest-700 text-lg max-w-2xl mx-auto">
-                Mason, Reid, and Langdon—inseparable brothers who shared a bond that went beyond words.
+                Mason, Reid, and Langdon, inseparable brothers who shared a bond that went beyond words.
               </p>
             </div>
           </AnimatedSection>
