@@ -12,7 +12,7 @@ const navLinks = [
   { href: '/#passions', label: 'Passions' },
   { href: '/#legacy', label: 'Legacy' },
   // Separate pages (right side)
-  { href: '/family', label: 'Family', isPage: true },
+  // { href: '/family', label: 'Family', isPage: true },
   { href: '/gallery', label: 'Gallery', isPage: true, isGallery: true },
 ]
 

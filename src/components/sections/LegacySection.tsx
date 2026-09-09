@@ -18,9 +18,9 @@ export default function LegacySection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   
   const legacyImages = [
-    { id: 1, src: '/pictures/family/with-parents.jpg', label: 'With Parents', type: 'photo' as const },
+    { id: 1, src: '/pictures/family/img_0929.jpg', label: 'With Parents', type: 'photo' as const },
     { id: 2, src: '/pictures/family/brothers.jpg', label: 'Brothers', type: 'photo' as const },
-    { id: 3, src: '/pictures/family/extended-family.jpg', label: 'Extended Family', type: 'photo' as const },
+    { id: 3, src: '/pictures/family/04cf8b0f-f717-4ca2-839e-ef229588990b.jpg', label: 'Extended Family', type: 'photo' as const },
   ]
 
   const handlePrev = () => {
@@ -99,20 +99,20 @@ export default function LegacySection() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="cursor-pointer group" onClick={() => setSelectedImage(1)}>
-                <MediaPlaceholder aspectRatio="square" label="With Parents" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="With Parents" src="/pictures/family/img_0929.jpg" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(2)}>
-                <MediaPlaceholder aspectRatio="square" label="Brothers" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="Brothers" src="/pictures/family/brothers.jpg" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="cursor-pointer group col-span-2" onClick={() => setSelectedImage(3)}>
-                <MediaPlaceholder aspectRatio="landscape" label="Extended Family" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="landscape" label="Extended Family" src="/pictures/family/04cf8b0f-f717-4ca2-839e-ef229588990b.jpg" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
             </div>
           </div>
         </AnimatedSection>
 
         {/* Tribute Video Slideshow */}
-        <AnimatedSection delay={0.35}>
+        {/* <AnimatedSection delay={0.35}>
           <div className="bg-gradient-to-br from-forest-800 to-forest-900 rounded-2xl p-8 md:p-12 lg:p-16 text-center mb-16">
             <div className="flex items-center justify-center gap-3 mb-6">
               <Heart className="w-6 h-6 text-ember-500" />
@@ -136,7 +136,7 @@ export default function LegacySection() {
               A tribute filled with laughter, adventure, and the joy Reid brought to everyone around him.
             </p>
           </div>
-        </AnimatedSection>
+        </AnimatedSection> */}
 
         {/* Quote */}
         <AnimatedSection delay={0.3}>

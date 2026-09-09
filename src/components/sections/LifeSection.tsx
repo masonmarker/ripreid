@@ -12,17 +12,17 @@ export default function LifeSection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   
   const lifeImages = [
-    { id: 1, src: '/pictures/family/young-reid.jpg', label: 'Young Reid', type: 'photo' as const },
-    { id: 2, src: '/pictures/family/family.jpg', label: 'Family', type: 'photo' as const },
-    { id: 3, src: '/pictures/family/childhood.jpg', label: 'Childhood', type: 'photo' as const },
+    { id: 1, src: '/pictures/family/young_reid.png', label: 'Young Reid', type: 'photo' as const },
+    { id: 2, src: '/pictures/adventures/reid_fishing.jpg', label: 'Fishing', type: 'photo' as const },
+    { id: 3, src: '/pictures/family/childhood.png', label: 'Childhood', type: 'photo' as const },
     { id: 4, src: '/pictures/family/img_5867.jpg', label: 'Reid with Family', type: 'photo' as const },
-    { id: 5, src: '/pictures/family/family-time.jpg', label: 'Family Time', type: 'photo' as const },
-    { id: 6, src: '/pictures/family/together.jpg', label: 'Together', type: 'photo' as const },
+    { id: 5, src: '/pictures/family/reid_and_mom.jpg', label: 'Family Time', type: 'photo' as const },
+    { id: 6, src: '/pictures/adventures/fishing_trip.png', label: 'Together', type: 'photo' as const },
     { id: 7, src: '/pictures/family/home.jpg', label: 'Home', type: 'photo' as const },
     { id: 8, src: '/pictures/friends/football.jpg', label: 'Football', type: 'photo' as const },
     { id: 9, src: friendMedia[0]?.src, label: friendMedia[0]?.label || 'Friends', type: friendMedia[0]?.type || 'photo' as const },
-    { id: 10, src: '/pictures/friends/school.jpg', label: 'School', type: 'photo' as const },
-    { id: 11, src: '/pictures/friends/team-photo.jpg', label: 'Team Photo', type: 'photo' as const },
+    { id: 10, src: '/pictures/friends/school.png', label: 'School', type: 'photo' as const },
+    { id: 11, src: '/pictures/friends/img_7042.jpg', label: 'Team Photo', type: 'photo' as const },
   ]
 
   const handlePrev = () => {
@@ -88,15 +88,16 @@ export default function LifeSection() {
                 <MediaPlaceholder
                   aspectRatio="portrait"
                   label="Young Reid"
+                  src="/pictures/family/young_reid.png"
                   className="col-span-1 transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
               <div className="space-y-4">
                 <div className="cursor-pointer group" onClick={() => setSelectedImage(2)}>
-                  <MediaPlaceholder aspectRatio="square" label="Family" className="transition-transform duration-500 group-hover:scale-105" />
+                  <MediaPlaceholder aspectRatio="square" label="Fishing" src="/pictures/adventures/reid_fishing.jpg" className="transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="cursor-pointer group" onClick={() => setSelectedImage(3)}>
-                  <MediaPlaceholder aspectRatio="square" label="Childhood" className="transition-transform duration-500 group-hover:scale-105" />
+                  <MediaPlaceholder aspectRatio="square" label="Childhood" src="/pictures/family/childhood.png" className="transition-transform duration-500 group-hover:scale-105" />
                 </div>
               </div>
             </div>
@@ -130,13 +131,13 @@ export default function LifeSection() {
                 <MediaPlaceholder aspectRatio="square" label="Reid with Family" src="/pictures/family/img_5867.jpg" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(5)}>
-                <MediaPlaceholder aspectRatio="square" label="Family Time" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="Family Time" src="/pictures/family/reid_and_mom.jpg" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(6)}>
-                <MediaPlaceholder aspectRatio="square" label="Together" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="Together" src="/pictures/adventures/fishing_trip.png" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(7)}>
-                <MediaPlaceholder aspectRatio="square" label="Home" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="Home" src="/pictures/family/home.jpg" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
             </div>
           </AnimatedSection>
@@ -147,7 +148,7 @@ export default function LifeSection() {
           <AnimatedSection delay={0.1} className="order-2 lg:order-1">
             <div className="grid grid-cols-3 gap-4">
               <div className="cursor-pointer group" onClick={() => setSelectedImage(8)}>
-                <MediaPlaceholder aspectRatio="square" label="Football" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="Football" src="/pictures/friends/football.jpg" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(9)}>
                 <MediaPlaceholder 
@@ -159,12 +160,13 @@ export default function LifeSection() {
                 />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(10)}>
-                <MediaPlaceholder aspectRatio="square" label="School" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="School" src="/pictures/friends/school.png" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="cursor-pointer group col-span-3" onClick={() => setSelectedImage(11)}>
                 <MediaPlaceholder
                   aspectRatio="landscape"
                   label="Team Photo"
+                  src="/pictures/friends/img_7042.jpg"
                   className="transition-transform duration-500 group-hover:scale-105"
                 />
               </div>
