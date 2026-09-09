@@ -23,15 +23,15 @@ export default function PassionsSection() {
   const [selectedImage, setSelectedImage] = useState<number | null>(null)
   
   const passionsImages = [
-    { id: 1, src: '/pictures/adventures/fishing-trip.jpg', label: 'Fishing Trip', type: 'photo' as const },
-    { id: 2, src: '/pictures/adventures/hunting.jpg', label: 'Hunting', type: 'photo' as const },
-    { id: 3, src: '/pictures/adventures/truck.jpg', label: 'Truck', type: 'photo' as const },
-    { id: 4, src: '/pictures/adventures/dirt-bike.jpg', label: 'Dirt Bike', type: 'photo' as const },
-    { id: 5, src: '/pictures/adventures/bonfire.jpg', label: 'Bonfire', type: 'photo' as const },
+    { id: 1, src: '/pictures/adventures/fishing_trip.png', label: 'Fishing Trip', type: 'photo' as const },
+    { id: 2, src: '/pictures/adventures/hunting.png', label: 'Hunting', type: 'photo' as const },
+    { id: 3, src: '/pictures/service/img_8332.png', label: 'Truck', type: 'photo' as const },
+    { id: 4, src: '/pictures/adventures/img_8748.png', label: 'Dirt Bike', type: 'photo' as const },
+    { id: 5, src: '/videos/adventures/82a4be7b-9559-4fb9-91b3-3a31a1c239b7.mp4', label: 'Bonfire', type: 'video' as const },
     { id: 6, src: '/videos/friends/img_1252.mp4', label: 'Lake', type: 'video' as const },
     { id: 7, src: '/pictures/family/brothers.jpg', label: 'Brothers', type: 'photo' as const },
     { id: 8, src: friendMedia[0]?.src, label: friendMedia[0]?.label || 'Friends', type: friendMedia[0]?.type || 'photo' as const },
-    { id: 9, src: '/pictures/family/family-gathering.jpg', label: 'Family Gathering', type: 'photo' as const },
+    { id: 9, src: '/videos/family/23278d23-5c43-4429-9cf6-647ec4b80a7a.mp4', label: 'Family Gathering', type: 'video' as const },
   ]
 
   const handlePrev = () => {
@@ -92,16 +92,16 @@ export default function PassionsSection() {
         <div className="grid lg:grid-cols-3 gap-6 mb-20">
           <AnimatedSection delay={0.2} className="lg:col-span-2">
             <div className="cursor-pointer group" onClick={() => setSelectedImage(1)}>
-              <MediaPlaceholder aspectRatio="wide" label="Fishing Trip" className="h-full min-h-[300px] transition-transform duration-500 group-hover:scale-105" />
+              <MediaPlaceholder aspectRatio="wide" label="Fishing Trip" src="/pictures/adventures/fishing_trip.png" className="h-full min-h-[300px] transition-transform duration-500 group-hover:scale-105" />
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
             <div className="grid grid-rows-2 gap-6 h-full">
               <div className="cursor-pointer group" onClick={() => setSelectedImage(2)}>
-                <MediaPlaceholder aspectRatio="landscape" label="Hunting" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="landscape" label="Hunting" src="/pictures/adventures/hunting.png" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(3)}>
-                <MediaPlaceholder aspectRatio="landscape" label="Truck" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="landscape" label="Truck" src="/pictures/service/img_8332.png" className="transition-transform duration-500 group-hover:scale-105" />
               </div>
             </div>
           </AnimatedSection>
@@ -110,12 +110,12 @@ export default function PassionsSection() {
         <div className="grid md:grid-cols-3 gap-6 mb-20">
           <AnimatedSection delay={0.2}>
             <div className="cursor-pointer group" onClick={() => setSelectedImage(4)}>
-              <MediaPlaceholder aspectRatio="square" label="Dirt Bike" className="transition-transform duration-500 group-hover:scale-105" />
+              <MediaPlaceholder aspectRatio="square" label="Dirt Bike" src="/pictures/adventures/img_8748.png" className="transition-transform duration-500 group-hover:scale-105" />
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
             <div className="cursor-pointer group" onClick={() => setSelectedImage(5)}>
-              <MediaPlaceholder aspectRatio="square" label="Bonfire" className="transition-transform duration-500 group-hover:scale-105" />
+              <MediaPlaceholder aspectRatio="square" label="Bonfire" src="/videos/adventures/82a4be7b-9559-4fb9-91b3-3a31a1c239b7.mp4" type="video" className="transition-transform duration-500 group-hover:scale-105" />
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.4}>
@@ -153,7 +153,7 @@ export default function PassionsSection() {
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="cursor-pointer group" onClick={() => setSelectedImage(7)}>
-                  <MediaPlaceholder aspectRatio="square" label="Brothers" className="transition-transform duration-500 group-hover:scale-105" />
+                  <MediaPlaceholder aspectRatio="square" label="Brothers" src="/pictures/family/brothers.jpg" className="transition-transform duration-500 group-hover:scale-105" />
                 </div>
                 <div className="cursor-pointer group" onClick={() => setSelectedImage(8)}>
                   <MediaPlaceholder 
@@ -165,7 +165,7 @@ export default function PassionsSection() {
                   />
                 </div>
                 <div className="cursor-pointer group col-span-2" onClick={() => setSelectedImage(9)}>
-                  <MediaPlaceholder aspectRatio="landscape" label="Family Gathering" className="transition-transform duration-500 group-hover:scale-105" />
+                  <MediaPlaceholder aspectRatio="landscape" label="Family Gathering" src="/videos/family/23278d23-5c43-4429-9cf6-647ec4b80a7a.mp4" type="video" className="transition-transform duration-500 group-hover:scale-105" />
                 </div>
               </div>
             </div>

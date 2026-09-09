@@ -4,9 +4,12 @@
   "description": "Memorial website for SPC Reid Wesley Marker",
   "scripts": {
     "dev": "next dev",
+    "prebuild": "node scripts/dedupe-media.mjs --check",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "dedupe:media": "node scripts/dedupe-media.mjs",
+    "dedupe:media:apply": "node scripts/dedupe-media.mjs --apply"
   },
   "keywords": [],
   "author": "",
@@ -24,5 +27,8 @@
     "react-dom": "^19.2.3",
     "tailwindcss": "^4.1.18",
     "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "sharp": "^0.34.5"
   }
 }

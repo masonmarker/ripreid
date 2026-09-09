@@ -14,7 +14,7 @@ export default function FooterSection() {
             Reid Wesley Marker
           </h3>
           <p className="text-warmstone-400 mb-6">
-            2005 ,  2025
+            2005 - 2025
           </p>
           <div className="flex items-center justify-center gap-2 text-warmstone-400 mb-8">
             <span className="w-12 h-px bg-warmstone-600" />
