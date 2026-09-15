@@ -1,10 +1,10 @@
 'use client'
 
 import { useState } from 'react'
-import { Cross, Heart, Users, MapPin, X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Cross, Heart, Users, MapPin } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
+import Lightbox from '../Lightbox'
 import TributeVideo from '../TributeVideo'
 
 const familyMembers = [
@@ -15,7 +15,7 @@ const familyMembers = [
 ]
 
 export default function LegacySection() {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [selectedImage, setSelectedImage] = useState<string | number | null>(null)
   
   const legacyImages = [
     { id: 1, src: '/pictures/family/img_0929.jpg', label: 'With Parents', type: 'photo' as const },
@@ -23,19 +23,6 @@ export default function LegacySection() {
     { id: 3, src: '/pictures/family/04cf8b0f-f717-4ca2-839e-ef229588990b.jpg', label: 'Extended Family', type: 'photo' as const },
   ]
 
-  const handlePrev = () => {
-    if (selectedImage === null) return
-    const currentIndex = legacyImages.findIndex(item => item.id === selectedImage)
-    const prevIndex = currentIndex > 0 ? currentIndex - 1 : legacyImages.length - 1
-    setSelectedImage(legacyImages[prevIndex].id)
-  }
-
-  const handleNext = () => {
-    if (selectedImage === null) return
-    const currentIndex = legacyImages.findIndex(item => item.id === selectedImage)
-    const nextIndex = currentIndex < legacyImages.length - 1 ? currentIndex + 1 : 0
-    setSelectedImage(legacyImages[nextIndex].id)
-  }
   return (
     <section id="legacy" className="py-24 lg:py-32 bg-gradient-to-b from-warmstone-100 to-warmstone-200">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -46,7 +33,6 @@ export default function LegacySection() {
             </span>
             <h2
               className="mt-4 text-4xl md:text-5xl lg:text-6xl font-serif text-forest-900"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               His Legacy
             </h2>
@@ -59,7 +45,6 @@ export default function LegacySection() {
             <Cross className="w-12 h-12 mx-auto mb-6 text-forest-600" />
             <h3
               className="text-2xl md:text-3xl font-serif text-forest-800 mb-6"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               A Deep Faith
             </h3>
@@ -80,7 +65,6 @@ export default function LegacySection() {
                 <Users className="w-6 h-6 text-forest-600" />
                 <h3
                   className="text-2xl md:text-3xl font-serif text-forest-800"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
                 >
                   Survived By
                 </h3>
@@ -99,13 +83,13 @@ export default function LegacySection() {
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="cursor-pointer group" onClick={() => setSelectedImage(1)}>
-                <MediaPlaceholder aspectRatio="square" label="With Parents" src="/pictures/family/img_0929.jpg" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="With Parents" src="/pictures/family/img_0929.jpg" />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(2)}>
-                <MediaPlaceholder aspectRatio="square" label="Brothers" src="/pictures/family/brothers.jpg" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="square" label="Brothers" src="/pictures/family/brothers.jpg" />
               </div>
               <div className="cursor-pointer group col-span-2" onClick={() => setSelectedImage(3)}>
-                <MediaPlaceholder aspectRatio="landscape" label="Extended Family" src="/pictures/family/04cf8b0f-f717-4ca2-839e-ef229588990b.jpg" className="transition-transform duration-500 group-hover:scale-105" />
+                <MediaPlaceholder aspectRatio="landscape" label="Extended Family" src="/pictures/family/04cf8b0f-f717-4ca2-839e-ef229588990b.jpg" />
               </div>
             </div>
           </div>
@@ -118,7 +102,6 @@ export default function LegacySection() {
               <Heart className="w-6 h-6 text-ember-500" />
               <h3 
                 className="text-2xl md:text-3xl font-serif text-warmstone-100"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
               >
                 A Life Well Lived
               </h3>
@@ -143,7 +126,6 @@ export default function LegacySection() {
           <div className="bg-forest-800 rounded-2xl p-8 md:p-12 lg:p-16 text-center mb-16">
             <blockquote
               className="text-2xl md:text-3xl lg:text-4xl font-serif text-warmstone-100 leading-relaxed mb-6"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               &ldquo;Reid leaves behind a legacy of joy and laughter as he always lived life to the fullest.&rdquo;
             </blockquote>
@@ -183,58 +165,12 @@ export default function LegacySection() {
         </AnimatedSection>
       </div>
       
-      {/* Lightbox */}
-      <AnimatePresence>
-        {selectedImage !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-forest-950/95 flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
-          >
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-6 right-6 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <X size={32} />
-            </button>
-            
-            <button
-              onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-              className="absolute left-4 md:left-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <ChevronLeft size={40} />
-            </button>
-            
-            <button
-              onClick={(e) => { e.stopPropagation(); handleNext(); }}
-              className="absolute right-4 md:right-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <ChevronRight size={40} />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="max-w-5xl w-full"
-            >
-              {(() => {
-                const selectedItem = legacyImages.find(item => item.id === selectedImage)
-                return (
-                  <img
-                    src={selectedItem?.src}
-                    alt={selectedItem?.label}
-                    className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-                  />
-                )
-              })()}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Lightbox
+        items={legacyImages}
+        selectedId={selectedImage}
+        onClose={() => setSelectedImage(null)}
+        onSelect={setSelectedImage}
+      />
     </section>
   )
 }

@@ -49,7 +49,6 @@ export default function Navigation({ photoCount = 0, videoCount = 0 }: Navigatio
             className={`font-serif text-xl lg:text-2xl font-medium transition-colors duration-300 ${
               isScrolled ? 'text-forest-800' : 'text-white'
             }`}
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
           >
             Reid Marker
           </a>

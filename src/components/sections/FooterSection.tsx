@@ -9,7 +9,6 @@ export default function FooterSection() {
         <div className="text-center">
           <h3
             className="text-3xl md:text-4xl font-serif text-warmstone-100 mb-4"
-            style={{ fontFamily: 'Cormorant Garamond, serif' }}
           >
             Reid Wesley Marker
           </h3>
@@ -21,10 +20,10 @@ export default function FooterSection() {
             <Heart className="w-4 h-4 text-ember-400" fill="currentColor" />
             <span className="w-12 h-px bg-warmstone-600" />
           </div>
-          {/* <p className="text-warmstone-300 italic max-w-xl mx-auto mb-8" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+          {/* <p className="text-warmstone-300 italic max-w-xl mx-auto mb-8">
             &ldquo;He had an infectious laugh, the heart of a lion, and the gentleness of a lamb.&rdquo;
           </p> */}
-          <p className="text-warmstone-300 text-lg italic mb-2" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+          <p className="text-warmstone-300 text-lg font-serif italic mb-2">
             &ldquo;Love you, bye.&rdquo;
           </p>
           {/* <p className="text-warmstone-500 text-sm">

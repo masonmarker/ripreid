@@ -1,8 +1,14 @@
 import GalleryPageClient from '@/components/GalleryPageClient'
-import { getMediaCounts } from '@/lib/mediaCount'
+import { getAllMedia, getMediaStats } from '@/lib/media'
 
 export default function GalleryPage() {
-  const { photos, videos } = getMediaCounts()
-  
-  return <GalleryPageClient photoCount={photos} videoCount={videos} />
+  const { photos, videos } = getMediaStats()
+
+  return (
+    <GalleryPageClient
+      media={getAllMedia()}
+      photoCount={photos}
+      videoCount={videos}
+    />
+  )
 }

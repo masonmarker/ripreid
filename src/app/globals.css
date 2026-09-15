@@ -49,8 +49,8 @@
   --color-ember-900: #772f17;
   --color-ember-950: #40150a;
 
-  --font-serif: Georgia, Cambria, "Times New Roman", serif;
-  --font-sans: Inter, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), Georgia, Cambria, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
 
   --animate-fade-in: fadeIn 1s ease-out forwards;
   --animate-fade-in-up: fadeInUp 0.8s ease-out forwards;
@@ -75,12 +75,47 @@
 
 html {
   scroll-behavior: smooth;
+  /* Stop iOS/Android from re-flowing text at its own chosen size in landscape. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Real phones will happily grant a horizontal scroll to any single element that
+   escapes the viewport (a scaled tile, a long unbroken string, a framer-motion
+   layout transform). Clip it at the root so one stray element can never shift
+   the whole page sideways. `clip` is used over `hidden` because `hidden` on
+   html/body silently breaks `position: sticky`. */
+html,
+body {
+  max-width: 100%;
+  overflow-x: clip;
 }
 
 body {
   font-family: var(--font-sans);
   background-color: var(--color-warmstone-50);
   color: var(--color-forest-900);
+  /* Prevent the grey flash when tapping cards/links on mobile Safari. */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Nothing should ever be able to exceed its container's width. */
+img,
+video,
+svg {
+  max-width: 100%;
+}
+
+/* Long words (URLs, unbroken names) must wrap rather than widen the layout. */
+h1,
+h2,
+h3,
+h4,
+p,
+blockquote,
+span,
+a {
+  overflow-wrap: break-word;
 }
 
 ::selection {
@@ -128,4 +163,81 @@ body {
     var(--color-warmstone-300) 80%,
     transparent 100%
   );
+}
+
+/* Hero reveal. Deliberately CSS rather than framer-motion: the stylesheet is
+   render-blocking, so this always runs and always finishes. A JS-driven
+   equivalent bakes `opacity: 0` into the server HTML, which leaves the hero
+   blank until the bundle downloads -- the exact failure seen on phones.
+   `both` fill mode holds the from-state during the delay so there is no flash. */
+@keyframes revealUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.reveal {
+  animation: revealUp 0.9s ease-out both;
+  animation-delay: var(--reveal-delay, 0ms);
+}
+
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(8px);
+  }
+}
+
+.animate-nudge {
+  animation: nudge 2s ease-in-out infinite;
+}
+
+/* Full-height hero that accounts for mobile browser chrome. `100vh` on iOS
+   Safari measures the viewport *without* the address bar, so a `min-h-screen`
+   hero is always taller than what the user can actually see. `dvh` tracks the
+   real visible height, with a vh fallback for older browsers. */
+.min-h-screen-dvh {
+  min-height: 100vh;
+}
+
+@supports (min-height: 100dvh) {
+  .min-h-screen-dvh {
+    min-height: 100dvh;
+  }
+}
+
+/* Keep fixed overlays clear of the notch and home indicator. */
+.safe-inset {
+  padding-top: env(safe-area-inset-top);
+  padding-right: env(safe-area-inset-right);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+}
+
+/* Momentum scrolling for the lightbox media area on iOS. */
+.overscroll-none-touch {
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

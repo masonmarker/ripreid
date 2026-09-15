@@ -51,7 +51,6 @@ export default function FamilyPageClient() {
             </div>
             <h1
               className="text-4xl md:text-5xl lg:text-6xl font-serif text-warmstone-100 mb-4"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               Reid&apos;s Family
             </h1>
@@ -88,7 +87,6 @@ export default function FamilyPageClient() {
           <AnimatedSection>
             <h2
               className="text-3xl md:text-4xl font-serif text-forest-800 mb-8 text-center"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               Reid with His Family
             </h2>
@@ -112,7 +110,6 @@ export default function FamilyPageClient() {
             <div className="text-center mb-12">
               <h2
                 className="text-3xl md:text-4xl font-serif text-forest-800 mb-4"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
               >
                 The Three Brothers
               </h2>
@@ -134,7 +131,6 @@ export default function FamilyPageClient() {
             <div className="mt-12 bg-forest-800 rounded-2xl p-8 md:p-12 text-center">
               <blockquote
                 className="text-2xl md:text-3xl font-serif text-warmstone-100 leading-relaxed mb-4"
-                style={{ fontFamily: 'Cormorant Garamond, serif' }}
               >
                 &ldquo;Proverbs 27:17&rdquo;
               </blockquote>
@@ -152,7 +148,6 @@ export default function FamilyPageClient() {
           <AnimatedSection>
             <h2
               className="text-3xl md:text-4xl font-serif text-forest-800 mb-8 text-center"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               Family Moments
             </h2>

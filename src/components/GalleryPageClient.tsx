@@ -2,20 +2,14 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, Camera, Video, ArrowLeft, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
+import { Camera, Video, ArrowLeft, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
 import AnimatedSection from '@/components/AnimatedSection'
 import MediaPlaceholder from '@/components/MediaPlaceholder'
 import Navigation from '@/components/Navigation'
 import FooterSection from '@/components/sections/FooterSection'
 import ShareMemoryBanner from '@/components/ShareMemoryBanner'
-
-interface MediaItem {
-  id: string
-  label: string
-  category: string
-  type: 'photo' | 'video'
-  src: string
-}
+import Lightbox from '@/components/Lightbox'
+import type { MediaItem } from '@/lib/media'
 
 const categories = [
   { id: 'all', label: 'All Media', icon: Images },
@@ -27,65 +21,28 @@ const categories = [
 ]
 
 interface GalleryPageClientProps {
+  media: MediaItem[]
   photoCount: number
   videoCount: number
 }
 
-export default function GalleryPageClient({ photoCount, videoCount }: GalleryPageClientProps) {
+export default function GalleryPageClient({ media, photoCount, videoCount }: GalleryPageClientProps) {
   const [activeCategory, setActiveCategory] = useState('all')
   const [mediaType, setMediaType] = useState<'all' | 'photo' | 'video'>('all')
-  const [selectedMedia, setSelectedMedia] = useState<string | null>(null)
-  const [galleryMedia, setGalleryMedia] = useState<MediaItem[]>([])
-  const [loading, setLoading] = useState(true)
+  const [selectedMedia, setSelectedMedia] = useState<string | number | null>(null)
 
-  useEffect(() => {
-    async function fetchMedia() {
-      try {
-        const response = await fetch('/api/media')
-        const data = await response.json()
-        setGalleryMedia(data.media || [])
-      } catch (error) {
-        console.error('Failed to fetch media:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+  // Tiles must be visible in the server HTML, so no entry animation on the
+  // first render. Once mounted, re-filtering still animates normally.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
-    fetchMedia()
-  }, [])
-
-  const filteredMedia = galleryMedia.filter(item => {
+  const filteredMedia = media.filter(item => {
     const categoryMatch = activeCategory === 'all' || item.category === activeCategory
     const typeMatch = mediaType === 'all' || item.type === mediaType
     return categoryMatch && typeMatch
   })
 
-  const handlePrev = () => {
-    if (selectedMedia === null) return
-    const currentIndex = filteredMedia.findIndex(item => item.id === selectedMedia)
-    const prevIndex = currentIndex > 0 ? currentIndex - 1 : filteredMedia.length - 1
-    setSelectedMedia(filteredMedia[prevIndex].id)
-  }
-
-  const handleNext = () => {
-    if (selectedMedia === null) return
-    const currentIndex = filteredMedia.findIndex(item => item.id === selectedMedia)
-    const nextIndex = currentIndex < filteredMedia.length - 1 ? currentIndex + 1 : 0
-    setSelectedMedia(filteredMedia[nextIndex].id)
-  }
-
   const hasMedia = photoCount > 0 || videoCount > 0
-
-  if (loading) {
-    return (
-      <main className="bg-warmstone-50 min-h-screen">
-        <Navigation photoCount={photoCount} videoCount={videoCount} />
-        <div className="flex items-center justify-center min-h-[50vh]">
-          <div className="text-forest-600">Loading gallery...</div>
-        </div>
-      </main>
-    )
-  }
 
   return (
     <main className="bg-warmstone-50 min-h-screen">
@@ -109,7 +66,6 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
             </div>
             <h1
               className="text-4xl md:text-5xl lg:text-6xl font-serif text-warmstone-100 mb-4"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               Complete Gallery
             </h1>
@@ -210,7 +166,7 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
                   <motion.div
                     key={item.id}
                     layout
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={mounted ? { opacity: 0, scale: 0.9 } : false}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.3 }}
@@ -218,16 +174,16 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
                     className="cursor-pointer group"
                   >
                     <div className="relative overflow-hidden rounded-lg">
-                      <MediaPlaceholder 
-                        aspectRatio="square" 
+                      <MediaPlaceholder
+                        aspectRatio="square"
                         label={item.label}
                         type={item.type}
                         src={item.src}
-                        className="transition-transform duration-500 group-hover:scale-105"
+                        sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                       />
-                      <div className="absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-300" />
+                      <div className="pointer-events-none absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-300" />
                       {item.type === 'video' && (
-                        <div className="absolute top-2 right-2 bg-forest-900/80 rounded-full p-1">
+                        <div className="pointer-events-none absolute top-2 right-2 bg-forest-900/80 rounded-full p-1">
                           <Video size={12} className="text-warmstone-300" />
                         </div>
                       )}
@@ -240,74 +196,12 @@ export default function GalleryPageClient({ photoCount, videoCount }: GalleryPag
         </div>
       </section>
 
-      {/* Lightbox */}
-      <AnimatePresence>
-        {selectedMedia !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-forest-950/95 flex items-center justify-center p-4"
-            onClick={() => setSelectedMedia(null)}
-          >
-            <button
-              onClick={() => setSelectedMedia(null)}
-              className="absolute top-6 right-6 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <X size={32} />
-            </button>
-            
-            <button
-              onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-              className="absolute left-4 md:left-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <ChevronLeft size={40} />
-            </button>
-            
-            <button
-              onClick={(e) => { e.stopPropagation(); handleNext(); }}
-              className="absolute right-4 md:right-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <ChevronRight size={40} />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="max-w-5xl w-full"
-            >
-              {(() => {
-                const selectedItem = galleryMedia.find(item => item.id === selectedMedia)
-                if (!selectedItem) return null
-                
-                if (selectedItem.type === 'video') {
-                  return (
-                    <video
-                      src={selectedItem.src}
-                      controls
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-                    />
-                  )
-                }
-                
-                return (
-                  <img
-                    src={selectedItem.src}
-                    alt={selectedItem.label}
-                    className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-                  />
-                )
-              })()}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Lightbox
+        items={filteredMedia}
+        selectedId={selectedMedia}
+        onClose={() => setSelectedMedia(null)}
+        onSelect={setSelectedMedia}
+      />
 
       {/* Submit Your Memories */}
       <section className="py-8 bg-warmstone-50">

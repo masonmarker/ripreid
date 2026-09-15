@@ -2,76 +2,34 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { X, ChevronLeft, ChevronRight, ArrowRight, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
+import { ArrowRight, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 import ShareMemoryBanner from '../ShareMemoryBanner'
-
-interface MediaItem {
-  id: string
-  label: string
-  category: string
-  type: 'photo' | 'video'
-  src: string
-}
+import Lightbox from '../Lightbox'
+import type { MediaItem } from '@/lib/media'
 
 interface GallerySectionProps {
+  media: MediaItem[]
   mediaCount?: number
 }
 
-export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) {
+export default function GallerySection({ media, mediaCount = 0 }: GallerySectionProps) {
   const [activeCategory, setActiveCategory] = useState('all')
-  const [selectedImage, setSelectedImage] = useState<string | null>(null)
-  const [galleryMedia, setGalleryMedia] = useState<MediaItem[]>([])
-  const [loading, setLoading] = useState(true)
+  const [selectedImage, setSelectedImage] = useState<string | number | null>(null)
 
-  useEffect(() => {
-    async function fetchMedia() {
-      try {
-        const response = await fetch('/api/media')
-        const data = await response.json()
-        setGalleryMedia(data.media || [])
-      } catch (error) {
-        console.error('Failed to fetch media:', error)
-      } finally {
-        setLoading(false)
-      }
-    }
+  // Tiles must be visible in the server HTML, so no entry animation on the
+  // first render. Once mounted, re-filtering still animates normally.
+  const [mounted, setMounted] = useState(false)
+  useEffect(() => setMounted(true), [])
 
-    fetchMedia()
-  }, [])
-
-  // Show only first 8 items for preview
-  const previewMedia = galleryMedia.slice(0, 8)
+  // Media now arrives as a prop from the server, so the grid is in the initial
+  // HTML. This section used to render only "Loading gallery..." until a
+  // client-side fetch resolved, which on a phone meant a blank slab of page.
+  const previewMedia = media.slice(0, 8)
   const filteredMedia = activeCategory === 'all'
     ? previewMedia
     : previewMedia.filter(item => item.category === activeCategory)
-
-  const handlePrev = () => {
-    if (selectedImage === null) return
-    const currentIndex = filteredMedia.findIndex(item => item.id === selectedImage)
-    const prevIndex = currentIndex > 0 ? currentIndex - 1 : filteredMedia.length - 1
-    setSelectedImage(filteredMedia[prevIndex].id)
-  }
-
-  const handleNext = () => {
-    if (selectedImage === null) return
-    const currentIndex = filteredMedia.findIndex(item => item.id === selectedImage)
-    const nextIndex = currentIndex < filteredMedia.length - 1 ? currentIndex + 1 : 0
-    setSelectedImage(filteredMedia[nextIndex].id)
-  }
-
-  if (loading) {
-    return (
-      <section id="gallery" className="py-24 lg:py-32 bg-warmstone-50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-center min-h-[50vh]">
-            <div className="text-forest-600">Loading gallery...</div>
-          </div>
-        </div>
-      </section>
-    )
-  }
 
   return (
     <section id="gallery" className="py-24 lg:py-32 bg-warmstone-50">
@@ -83,7 +41,6 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
             </span>
             <h2
               className="mt-4 text-4xl md:text-5xl lg:text-6xl font-serif text-forest-900"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               Photos &amp; Videos
             </h2>
@@ -135,7 +92,7 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
                 <motion.div
                   key={item.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.9 }}
+                  initial={mounted ? { opacity: 0, scale: 0.9 } : false}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
@@ -143,14 +100,14 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
                   className="cursor-pointer group"
                 >
                   <div className="relative overflow-hidden rounded-lg">
-                    <MediaPlaceholder 
-                      aspectRatio="square" 
+                    <MediaPlaceholder
+                      aspectRatio="square"
                       label={item.label}
                       type={item.type}
                       src={item.src}
-                      className="transition-transform duration-500 group-hover:scale-105"
+                      sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
                     />
-                    <div className="absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-300" />
+                    <div className="pointer-events-none absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-300" />
                   </div>
                 </motion.div>
               ))}
@@ -179,74 +136,12 @@ export default function GallerySection({ mediaCount = 0 }: GallerySectionProps) 
           </div>
         </AnimatedSection>
 
-        {/* Lightbox */}
-        <AnimatePresence>
-          {selectedImage !== null && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-forest-950/95 flex items-center justify-center p-4"
-              onClick={() => setSelectedImage(null)}
-            >
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-6 right-6 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-              >
-                <X size={32} />
-              </button>
-              
-              <button
-                onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-                className="absolute left-4 md:left-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-              >
-                <ChevronLeft size={40} />
-              </button>
-              
-              <button
-                onClick={(e) => { e.stopPropagation(); handleNext(); }}
-                className="absolute right-4 md:right-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-              >
-                <ChevronRight size={40} />
-              </button>
-
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                exit={{ scale: 0.9, opacity: 0 }}
-                onClick={(e) => e.stopPropagation()}
-                className="max-w-4xl w-full"
-              >
-                {(() => {
-                  const selectedItem = galleryMedia.find(item => item.id === selectedImage)
-                  if (!selectedItem) return null
-                  
-                  if (selectedItem.type === 'video') {
-                    return (
-                      <video
-                        src={selectedItem.src}
-                        controls
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-                      />
-                    )
-                  }
-                  
-                  return (
-                    <img
-                      src={selectedItem.src}
-                      alt={selectedItem.label}
-                      className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-                    />
-                  )
-                })()}
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <Lightbox
+          items={filteredMedia}
+          selectedId={selectedImage}
+          onClose={() => setSelectedImage(null)}
+          onSelect={setSelectedImage}
+        />
 
         {/* Submit Your Memories */}
         <AnimatedSection delay={0.3}>
