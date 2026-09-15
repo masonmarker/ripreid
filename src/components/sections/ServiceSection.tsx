@@ -1,13 +1,13 @@
 'use client'
 
 import { useState } from 'react'
-import { Shield, Award, Star, Medal, X, ChevronLeft, ChevronRight } from 'lucide-react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { Shield, Award, Star, Medal } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
+import Lightbox from '../Lightbox'
 
 export default function ServiceSection() {
-  const [selectedImage, setSelectedImage] = useState<number | null>(null)
+  const [selectedImage, setSelectedImage] = useState<string | number | null>(null)
   
   const serviceImages = [
     { id: 1, src: '/pictures/service/img_8809.jpeg', label: 'In Uniform', type: 'photo' as const },
@@ -15,19 +15,6 @@ export default function ServiceSection() {
     { id: 3, src: '/pictures/service/img_7632.png', label: 'Deployment', type: 'photo' as const },
   ]
 
-  const handlePrev = () => {
-    if (selectedImage === null) return
-    const currentIndex = serviceImages.findIndex(item => item.id === selectedImage)
-    const prevIndex = currentIndex > 0 ? currentIndex - 1 : serviceImages.length - 1
-    setSelectedImage(serviceImages[prevIndex].id)
-  }
-
-  const handleNext = () => {
-    if (selectedImage === null) return
-    const currentIndex = serviceImages.findIndex(item => item.id === selectedImage)
-    const nextIndex = currentIndex < serviceImages.length - 1 ? currentIndex + 1 : 0
-    setSelectedImage(serviceImages[nextIndex].id)
-  }
   return (
     <section id="service" className="py-24 lg:py-32 bg-forest-900 text-warmstone-50">
       <div className="max-w-7xl mx-auto px-6 lg:px-8">
@@ -38,7 +25,6 @@ export default function ServiceSection() {
             </span>
             <h2
               className="mt-4 text-4xl md:text-5xl lg:text-6xl font-serif text-warmstone-50"
-              style={{ fontFamily: 'Cormorant Garamond, serif' }}
             >
               United States Army
             </h2>
@@ -75,7 +61,7 @@ export default function ServiceSection() {
                   aspectRatio="portrait" 
                   label="In Uniform" 
                   src="/pictures/service/img_8809.jpeg" 
-                  className="transition-transform duration-500 group-hover:scale-105" 
+                  
                 />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(2)}>
@@ -83,7 +69,7 @@ export default function ServiceSection() {
                   aspectRatio="square" 
                   label="Service" 
                   src="/pictures/service/img_7629.png" 
-                  className="transition-transform duration-500 group-hover:scale-105" 
+                  
                 />
               </div>
               <div className="cursor-pointer group" onClick={() => setSelectedImage(3)}>
@@ -91,7 +77,7 @@ export default function ServiceSection() {
                   aspectRatio="square" 
                   label="Deployment" 
                   src="/pictures/service/img_7632.png" 
-                  className="transition-transform duration-500 group-hover:scale-105" 
+                  
                 />
               </div>
             </div>
@@ -110,7 +96,6 @@ export default function ServiceSection() {
               <div className="text-center lg:text-left">
                 <h3
                   className="text-2xl md:text-3xl font-serif text-warmstone-100 mb-3"
-                  style={{ fontFamily: 'Cormorant Garamond, serif' }}
                 >
                   Order of Marechaussee Steel Award
                 </h3>
@@ -129,28 +114,28 @@ export default function ServiceSection() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
             <div className="text-center p-6 bg-forest-800/50 rounded-xl">
               <Shield className="w-8 h-8 mx-auto mb-3 text-warmstone-400" />
-              <div className="text-3xl font-serif text-warmstone-100 mb-1" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <div className="text-3xl font-serif text-warmstone-100 mb-1">
                 E31B
               </div>
               <div className="text-warmstone-400 text-sm">Military Police</div>
             </div>
             <div className="text-center p-6 bg-forest-800/50 rounded-xl">
               <Star className="w-8 h-8 mx-auto mb-3 text-warmstone-400" />
-              <div className="text-3xl font-serif text-warmstone-100 mb-1" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <div className="text-3xl font-serif text-warmstone-100 mb-1">
                 2
               </div>
               <div className="text-warmstone-400 text-sm">Deployments</div>
             </div>
             <div className="text-center p-6 bg-forest-800/50 rounded-xl">
               <Award className="w-8 h-8 mx-auto mb-3 text-warmstone-400" />
-              <div className="text-3xl font-serif text-warmstone-100 mb-1" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <div className="text-3xl font-serif text-warmstone-100 mb-1">
                 MPI
               </div>
               <div className="text-warmstone-400 text-sm">Pending Promotion</div>
             </div>
             <div className="text-center p-6 bg-forest-800/50 rounded-xl">
               <Medal className="w-8 h-8 mx-auto mb-3 text-warmstone-400" />
-              <div className="text-3xl font-serif text-warmstone-100 mb-1" style={{ fontFamily: 'Cormorant Garamond, serif' }}>
+              <div className="text-3xl font-serif text-warmstone-100 mb-1">
                 Steel
               </div>
               <div className="text-warmstone-400 text-sm">Marechaussee Award</div>
@@ -159,58 +144,12 @@ export default function ServiceSection() {
         </AnimatedSection>
       </div>
       
-      {/* Lightbox */}
-      <AnimatePresence>
-        {selectedImage !== null && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-forest-950/95 flex items-center justify-center p-4"
-            onClick={() => setSelectedImage(null)}
-          >
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-6 right-6 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <X size={32} />
-            </button>
-            
-            <button
-              onClick={(e) => { e.stopPropagation(); handlePrev(); }}
-              className="absolute left-4 md:left-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <ChevronLeft size={40} />
-            </button>
-            
-            <button
-              onClick={(e) => { e.stopPropagation(); handleNext(); }}
-              className="absolute right-4 md:right-8 text-warmstone-300 hover:text-warmstone-100 transition-colors"
-            >
-              <ChevronRight size={40} />
-            </button>
-
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="max-w-5xl w-full"
-            >
-              {(() => {
-                const selectedItem = serviceImages.find(item => item.id === selectedImage)
-                return (
-                  <img
-                    src={selectedItem?.src}
-                    alt={selectedItem?.label}
-                    className="w-full h-auto max-h-[80vh] object-contain rounded-lg"
-                  />
-                )
-              })()}
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Lightbox
+        items={serviceImages}
+        selectedId={selectedImage}
+        onClose={() => setSelectedImage(null)}
+        onSelect={setSelectedImage}
+      />
     </section>
   )
 }
