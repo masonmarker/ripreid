@@ -91,9 +91,8 @@ export default function Lightbox({ items, selectedId, onClose, onSelect }: Light
           <div className="safe-inset flex h-full w-full flex-col">
             <div className="flex items-center justify-between gap-2 px-4 py-3">
               <span className="min-w-0 truncate text-sm text-warmstone-400">
-                {current?.label}
                 {items.length > 1 && (
-                  <span className="ml-2 text-warmstone-500">
+                  <span className="text-warmstone-500">
                     {index + 1}/{items.length}
                   </span>
                 )}
