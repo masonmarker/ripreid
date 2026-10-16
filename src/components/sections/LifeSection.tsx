@@ -151,7 +151,7 @@ export default function LifeSection({ friendMedia }: LifeSectionProps) {
                   aspectRatio="landscape"
                   label="Team Photo"
                   src="/pictures/friends/img_7042.jpg"
-                 
+                  fit="contain"
                 />
               </div>
             </div>

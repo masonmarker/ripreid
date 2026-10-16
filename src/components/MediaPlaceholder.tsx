@@ -15,6 +15,10 @@ interface MediaPlaceholderProps {
   sizes?: string
   /** Only set for above-the-fold hero imagery. */
   priority?: boolean
+  /** CSS object-position for cropped media, e.g. 'center top'. */
+  objectPosition?: string
+  /** 'cover' fills the tile and crops; 'contain' shows the whole image letterboxed. */
+  fit?: 'cover' | 'contain'
 }
 
 const aspectClasses = {
@@ -39,6 +43,8 @@ export default function MediaPlaceholder({
   alt,
   sizes = DEFAULT_SIZES,
   priority = false,
+  objectPosition,
+  fit = 'cover',
 }: MediaPlaceholderProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -120,7 +126,8 @@ export default function MediaPlaceholder({
           disableRemotePlayback
           aria-label={alt || label}
           onCanPlay={() => setReady(true)}
-          className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          style={objectPosition ? { objectPosition } : undefined}
+          className={`absolute inset-0 w-full h-full ${fit === 'contain' ? 'object-contain' : 'object-cover'} transition-transform duration-500 group-hover:scale-105`}
         />
       </div>
     )
@@ -129,6 +136,19 @@ export default function MediaPlaceholder({
   if (src) {
     return (
       <div className={wrapper}>
+        {/* Blurred backdrop so `contain` tiles show ambient color instead of
+            empty bars at the sides. */}
+        {fit === 'contain' && (
+          <Image
+            src={src}
+            alt=""
+            aria-hidden
+            fill
+            sizes={sizes}
+            loading="lazy"
+            className="object-cover scale-110 blur-xl"
+          />
+        )}
         <Image
           src={src}
           alt={alt || label}
@@ -136,7 +156,8 @@ export default function MediaPlaceholder({
           sizes={sizes}
           priority={priority}
           loading={priority ? undefined : 'lazy'}
-          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          style={objectPosition ? { objectPosition } : undefined}
+          className={`${fit === 'contain' ? 'object-contain' : 'object-cover'} transition-transform duration-500 group-hover:scale-105`}
         />
       </div>
     )
