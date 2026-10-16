@@ -5,7 +5,6 @@ import { Fish, Target, Truck, Bike, Flame, TreePine, Heart, IceCream, Waves } fr
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 import Lightbox from '../Lightbox'
-import type { MediaItem } from '@/lib/media'
 
 const passions = [
   { icon: Fish, label: 'Fishing', description: 'Peaceful mornings on the water' },
@@ -18,11 +17,7 @@ const passions = [
   { icon: Waves, label: 'The Ocean', description: 'Endless horizons' },
 ]
 
-interface PassionsSectionProps {
-  friendMedia?: MediaItem
-}
-
-export default function PassionsSection({ friendMedia }: PassionsSectionProps) {
+export default function PassionsSection() {
   const [selectedImage, setSelectedImage] = useState<string | number | null>(null)
   
   const passionsImages = [
@@ -33,7 +28,7 @@ export default function PassionsSection({ friendMedia }: PassionsSectionProps) {
     { id: 5, src: '/videos/adventures/82a4be7b-9559-4fb9-91b3-3a31a1c239b7.mp4', label: 'Bonfire', type: 'video' as const },
     { id: 6, src: '/videos/friends/img_1252.mp4', label: 'Lake', type: 'video' as const },
     { id: 7, src: '/pictures/family/brothers.jpg', label: 'Brothers', type: 'photo' as const },
-    { id: 8, src: friendMedia?.src, label: friendMedia?.label || 'Friends', type: friendMedia?.type || 'photo' as const },
+    { id: 8, src: '/pictures/friends/img_7768.jpeg', label: 'Friends', type: 'photo' as const },
     { id: 9, src: '/videos/family/23278d23-5c43-4429-9cf6-647ec4b80a7a.mp4', label: 'Family Gathering', type: 'video' as const },
   ]
 
@@ -80,17 +75,35 @@ export default function PassionsSection({ friendMedia }: PassionsSectionProps) {
         {/* Photo Gallery for Passions */}
         <div className="grid lg:grid-cols-3 gap-6 mb-20">
           <AnimatedSection delay={0.2} className="lg:col-span-2">
-            <div className="cursor-pointer group" onClick={() => setSelectedImage(1)}>
-              <MediaPlaceholder aspectRatio="wide" label="Fishing Trip" src="/pictures/adventures/fishing_trip.png" className="h-full min-h-[300px]" />
+            <div className="cursor-pointer group h-full" onClick={() => setSelectedImage(1)}>
+              <MediaPlaceholder
+                aspectRatio="portrait"
+                label="Fishing Trip"
+                src="/pictures/adventures/fishing_trip.png"
+                className="h-full min-h-[300px]"
+                sizes="(min-width: 1024px) 66vw, 100vw"
+              />
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
             <div className="grid grid-rows-2 gap-6 h-full">
-              <div className="cursor-pointer group" onClick={() => setSelectedImage(2)}>
-                <MediaPlaceholder aspectRatio="landscape" label="Hunting" src="/pictures/adventures/hunting.png" />
+              <div className="cursor-pointer group h-full" onClick={() => setSelectedImage(2)}>
+                <MediaPlaceholder
+                  aspectRatio="portrait"
+                  label="Hunting"
+                  src="/pictures/adventures/hunting.png"
+                  className="h-full"
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                />
               </div>
-              <div className="cursor-pointer group" onClick={() => setSelectedImage(3)}>
-                <MediaPlaceholder aspectRatio="landscape" label="Truck" src="/pictures/service/img_8332.png" />
+              <div className="cursor-pointer group h-full" onClick={() => setSelectedImage(3)}>
+                <MediaPlaceholder
+                  aspectRatio="portrait"
+                  label="Truck"
+                  src="/pictures/service/img_8332.png"
+                  className="h-full"
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                />
               </div>
             </div>
           </AnimatedSection>
@@ -146,9 +159,8 @@ export default function PassionsSection({ friendMedia }: PassionsSectionProps) {
                 <div className="cursor-pointer group" onClick={() => setSelectedImage(8)}>
                   <MediaPlaceholder
                     aspectRatio="square"
-                    label={friendMedia?.label || "Friends"}
-                    src={friendMedia?.src}
-                    type={friendMedia?.type || "photo"}
+                    label="Friends"
+                    src="/pictures/friends/img_7768.jpeg"
                   />
                 </div>
                 <div className="cursor-pointer group col-span-2" onClick={() => setSelectedImage(9)}>

@@ -15,7 +15,7 @@ export default function Home() {
   // tiles are present in the initial HTML. They used to be fetched from
   // /api/media by three separate client components after hydration, which meant
   // three extra round trips before anything could appear on a phone.
-  const friends = getFriendMedia(2)
+  const friends = getFriendMedia(1)
 
   return (
     <main>
@@ -23,7 +23,7 @@ export default function Home() {
       <HeroSection />
       <LifeSection friendMedia={friends[0]} />
       <ServiceSection />
-      <PassionsSection friendMedia={friends[1] ?? friends[0]} />
+      <PassionsSection />
       <GallerySection media={media} mediaCount={total} />
       <LegacySection />
       <FooterSection />
