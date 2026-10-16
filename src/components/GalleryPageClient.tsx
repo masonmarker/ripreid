@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Camera, Video, ArrowLeft, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
+import { Camera, Video, ArrowLeft, Images, Heart, Shield, Compass, Users } from 'lucide-react'
 import AnimatedSection from '@/components/AnimatedSection'
 import MediaPlaceholder from '@/components/MediaPlaceholder'
 import Navigation from '@/components/Navigation'
@@ -17,7 +17,6 @@ const categories = [
   { id: 'service', label: 'Service', icon: Shield },
   { id: 'adventures', label: 'Adventures', icon: Compass },
   { id: 'friends', label: 'Friends', icon: Users },
-  { id: 'milestones', label: 'Milestones', icon: Star },
 ]
 
 interface GalleryPageClientProps {
@@ -136,7 +135,7 @@ export default function GalleryPageClient({ media, photoCount, videoCount }: Gal
               }`}
             >
               <Camera size={14} />
-              Photos Only
+              Photos
             </button>
             <button
               onClick={() => setMediaType('video')}
@@ -147,7 +146,7 @@ export default function GalleryPageClient({ media, photoCount, videoCount }: Gal
               }`}
             >
               <Video size={14} />
-              Videos Only
+              Videos
             </button>
           </div>
         </div>

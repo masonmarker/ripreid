@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, Images, Heart, Shield, Compass, Users, Star } from 'lucide-react'
+import { ArrowRight, Images, Heart, Shield, Compass, Users, Camera, Video } from 'lucide-react'
 import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 import ShareMemoryBanner from '../ShareMemoryBanner'
@@ -14,8 +14,32 @@ interface GallerySectionProps {
   mediaCount?: number
 }
 
+const PREVIEW_COUNT = 8
+
+// Round-robin across category+type buckets. getAllMedia groups items by
+// category with all photos before all videos, so a plain slice would show
+// only family photos.
+function interleaveMedia(media: MediaItem[]): MediaItem[] {
+  const buckets = new Map<string, MediaItem[]>()
+  for (const item of media) {
+    const key = `${item.category}:${item.type}`
+    const bucket = buckets.get(key)
+    if (bucket) bucket.push(item)
+    else buckets.set(key, [item])
+  }
+  const queues = [...buckets.values()]
+  const out: MediaItem[] = []
+  for (let i = 0; queues.some((q) => i < q.length); i++) {
+    for (const q of queues) {
+      if (i < q.length) out.push(q[i])
+    }
+  }
+  return out
+}
+
 export default function GallerySection({ media, mediaCount = 0 }: GallerySectionProps) {
   const [activeCategory, setActiveCategory] = useState('all')
+  const [mediaType, setMediaType] = useState<'all' | 'photo' | 'video'>('all')
   const [selectedImage, setSelectedImage] = useState<string | number | null>(null)
 
   // Tiles must be visible in the server HTML, so no entry animation on the
@@ -26,10 +50,13 @@ export default function GallerySection({ media, mediaCount = 0 }: GallerySection
   // Media now arrives as a prop from the server, so the grid is in the initial
   // HTML. This section used to render only "Loading gallery..." until a
   // client-side fetch resolved, which on a phone meant a blank slab of page.
-  const previewMedia = media.slice(0, 8)
-  const filteredMedia = activeCategory === 'all'
-    ? previewMedia
-    : previewMedia.filter(item => item.category === activeCategory)
+  // Filter first, then cap at the preview count — slicing before filtering
+  // stranded every category except the first one on disk.
+  const filteredMedia = (activeCategory === 'all'
+    ? interleaveMedia(media)
+    : media.filter(item => item.category === activeCategory)
+  ).filter(item => mediaType === 'all' || item.type === mediaType)
+   .slice(0, PREVIEW_COUNT)
 
   return (
     <section id="gallery" className="py-24 lg:py-32 bg-warmstone-50">
@@ -53,14 +80,13 @@ export default function GallerySection({ media, mediaCount = 0 }: GallerySection
 
         {/* Category Filter */}
         <AnimatedSection delay={0.1}>
-          <div className="flex flex-wrap justify-center gap-3 mb-12">
+          <div className="flex flex-wrap justify-center gap-3 mb-6">
             {[
               { id: 'all', label: 'All', icon: Images },
               { id: 'family', label: 'Family', icon: Heart },
               { id: 'service', label: 'Service', icon: Shield },
               { id: 'adventures', label: 'Adventures', icon: Compass },
               { id: 'friends', label: 'Friends', icon: Users },
-              { id: 'milestones', label: 'Milestones', icon: Star },
             ].map((category) => {
               const Icon = category.icon
               return (
@@ -78,6 +104,42 @@ export default function GallerySection({ media, mediaCount = 0 }: GallerySection
                 </button>
               )
             })}
+          </div>
+
+          {/* Media Type Filters */}
+          <div className="flex justify-center gap-2 mb-12">
+            <button
+              onClick={() => setMediaType('all')}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                mediaType === 'all'
+                  ? 'bg-ember-600 text-warmstone-50'
+                  : 'bg-warmstone-100 text-forest-600 hover:bg-warmstone-200'
+              }`}
+            >
+              All Types
+            </button>
+            <button
+              onClick={() => setMediaType('photo')}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                mediaType === 'photo'
+                  ? 'bg-ember-600 text-warmstone-50'
+                  : 'bg-warmstone-100 text-forest-600 hover:bg-warmstone-200'
+              }`}
+            >
+              <Camera size={14} />
+              Photos
+            </button>
+            <button
+              onClick={() => setMediaType('video')}
+              className={`flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium transition-all duration-300 ${
+                mediaType === 'video'
+                  ? 'bg-ember-600 text-warmstone-50'
+                  : 'bg-warmstone-100 text-forest-600 hover:bg-warmstone-200'
+              }`}
+            >
+              <Video size={14} />
+              Videos
+            </button>
           </div>
         </AnimatedSection>
 
