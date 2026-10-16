@@ -6,6 +6,7 @@ import AnimatedSection from '../AnimatedSection'
 import MediaPlaceholder from '../MediaPlaceholder'
 import Lightbox from '../Lightbox'
 import TributeVideo from '../TributeVideo'
+import ScholarshipFundPanel from '../ScholarshipFundPanel'
 
 const familyMembers = [
   { relation: 'Parents', names: 'David Edward Marker & Brooke Nicole Blackwell' },
@@ -138,31 +139,23 @@ export default function LegacySection() {
 
         {/* Memorial Info */}
         <AnimatedSection delay={0.4}>
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="max-w-2xl mx-auto mb-8">
             <div className="bg-warmstone-50 rounded-2xl p-8">
               <div className="flex items-center gap-3 mb-4">
                 <MapPin className="w-5 h-5 text-forest-600" />
                 <h4 className="font-medium text-forest-800">Final Resting Place</h4>
               </div>
               <p className="text-forest-700 leading-relaxed">
-                Reid was laid to rest with full military honors at 
-                <strong> Arlington National Cemetery</strong>, a fitting tribute to his 
+                Reid was laid to rest with full military honors at
+                <strong> Arlington National Cemetery</strong>, a fitting tribute to his
                 dedicated service to our country. He was buried in section <strong>36:804</strong>
-              </p>
-            </div>
-            <div className="bg-warmstone-50 rounded-2xl p-8">
-              <div className="flex items-center gap-3 mb-4">
-                <Heart className="w-5 h-5 text-forest-600" />
-                <h4 className="font-medium text-forest-800">Memorial Contributions</h4>
-              </div>
-              <p className="text-forest-700 leading-relaxed">
-                In Reid&apos;s honor, contributions may be made payable to:<br />
-                <strong>Sherando High School</strong><br />
-                <em>Memo: Reid W. Marker, Army Scholarship Fund</em>
               </p>
             </div>
           </div>
         </AnimatedSection>
+
+        {/* Scholarship Fund */}
+        <ScholarshipFundPanel />
       </div>
       
       <Lightbox

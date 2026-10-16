@@ -6,7 +6,7 @@ import { ImageIcon, Video, Play } from 'lucide-react'
 
 interface MediaPlaceholderProps {
   className?: string
-  aspectRatio?: 'square' | 'portrait' | 'landscape' | 'wide'
+  aspectRatio?: 'square' | 'portrait' | 'tall' | 'landscape' | 'wide'
   label?: string
   type?: 'photo' | 'video'
   src?: string
@@ -20,6 +20,7 @@ interface MediaPlaceholderProps {
 const aspectClasses = {
   square: 'aspect-square',
   portrait: 'aspect-[3/4]',
+  tall: 'aspect-[3/5]',
   landscape: 'aspect-[4/3]',
   wide: 'aspect-[16/9]',
 }

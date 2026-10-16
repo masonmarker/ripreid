@@ -10,7 +10,7 @@ export default function ServiceSection() {
   const [selectedImage, setSelectedImage] = useState<string | number | null>(null)
   
   const serviceImages = [
-    { id: 1, src: '/pictures/service/img_8809.jpeg', label: 'In Uniform', type: 'photo' as const },
+    { id: 1, src: '/pictures/service/reid_military_main.jpeg', label: 'In Uniform', type: 'photo' as const },
     { id: 2, src: '/pictures/service/img_7629.png', label: 'Service', type: 'photo' as const },
     { id: 3, src: '/pictures/service/img_7632.png', label: 'Deployment', type: 'photo' as const },
   ]
@@ -58,9 +58,9 @@ export default function ServiceSection() {
             <div className="grid grid-cols-2 gap-4">
               <div className="col-span-2 cursor-pointer group" onClick={() => setSelectedImage(1)}>
                 <MediaPlaceholder 
-                  aspectRatio="portrait" 
+                  aspectRatio="tall" 
                   label="In Uniform" 
-                  src="/pictures/service/img_8809.jpeg" 
+                  src="/pictures/service/reid_military_main.jpeg" 
                   
                 />
               </div>
