@@ -1,4 +1,4 @@
-import { GraduationCap } from 'lucide-react'
+import { ChevronDown, GraduationCap } from 'lucide-react'
 import AnimatedSection from './AnimatedSection'
 
 export default function ScholarshipFundPanel() {
@@ -18,12 +18,7 @@ export default function ScholarshipFundPanel() {
         {/* Native <details> rather than a JS toggle: the donation instructions
             stay reachable even before hydration (or if the bundle never
             arrives on a slow phone), which is the same reason the rest of the
-            page avoids JS-gated content.
-
-            Temporarily disabled until the donation details are verified
-            (who checks should be payable to, etc.). When re-enabling, restore
-            the ChevronDown import from lucide-react above. */}
-        {/*
+            page avoids JS-gated content. */}
         <details className="group max-w-md mx-auto">
           <summary className="inline-flex items-center gap-2 text-forest-600 hover:text-forest-800 text-sm tracking-[0.15em] uppercase font-medium cursor-pointer list-none [&::-webkit-details-marker]:hidden select-none">
             How to donate
@@ -32,7 +27,8 @@ export default function ScholarshipFundPanel() {
 
           <div className="mt-6 bg-warmstone-100 rounded-xl p-6 text-forest-700 leading-relaxed">
             <p className="mb-4">
-              Please make checks payable to Sherando High School and mail to:
+              Please make checks payable to{' '}
+              <strong>Sherando High School</strong> and mail to:
             </p>
             <address className="not-italic font-medium text-forest-800 mb-4">
               Sherando High School<br />
@@ -46,7 +42,6 @@ export default function ScholarshipFundPanel() {
             </p>
           </div>
         </details>
-        */}
       </div>
     </AnimatedSection>
   )
