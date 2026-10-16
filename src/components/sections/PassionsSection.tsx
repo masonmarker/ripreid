@@ -80,17 +80,35 @@ export default function PassionsSection({ friendMedia }: PassionsSectionProps) {
         {/* Photo Gallery for Passions */}
         <div className="grid lg:grid-cols-3 gap-6 mb-20">
           <AnimatedSection delay={0.2} className="lg:col-span-2">
-            <div className="cursor-pointer group" onClick={() => setSelectedImage(1)}>
-              <MediaPlaceholder aspectRatio="wide" label="Fishing Trip" src="/pictures/adventures/fishing_trip.png" className="h-full min-h-[300px]" />
+            <div className="cursor-pointer group h-full" onClick={() => setSelectedImage(1)}>
+              <MediaPlaceholder
+                aspectRatio="portrait"
+                label="Fishing Trip"
+                src="/pictures/adventures/fishing_trip.png"
+                className="h-full min-h-[300px]"
+                sizes="(min-width: 1024px) 66vw, 100vw"
+              />
             </div>
           </AnimatedSection>
           <AnimatedSection delay={0.3}>
             <div className="grid grid-rows-2 gap-6 h-full">
-              <div className="cursor-pointer group" onClick={() => setSelectedImage(2)}>
-                <MediaPlaceholder aspectRatio="landscape" label="Hunting" src="/pictures/adventures/hunting.png" />
+              <div className="cursor-pointer group h-full" onClick={() => setSelectedImage(2)}>
+                <MediaPlaceholder
+                  aspectRatio="portrait"
+                  label="Hunting"
+                  src="/pictures/adventures/hunting.png"
+                  className="h-full"
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                />
               </div>
-              <div className="cursor-pointer group" onClick={() => setSelectedImage(3)}>
-                <MediaPlaceholder aspectRatio="landscape" label="Truck" src="/pictures/service/img_8332.png" />
+              <div className="cursor-pointer group h-full" onClick={() => setSelectedImage(3)}>
+                <MediaPlaceholder
+                  aspectRatio="portrait"
+                  label="Truck"
+                  src="/pictures/service/img_8332.png"
+                  className="h-full"
+                  sizes="(min-width: 1024px) 33vw, 100vw"
+                />
               </div>
             </div>
           </AnimatedSection>
