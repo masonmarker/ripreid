@@ -13,6 +13,8 @@ interface MediaPlaceholderProps {
   alt?: string
   /** Responsive width hint for the optimiser. Must match the real layout. */
   sizes?: string
+  /** next/image quality (1-100). Raise for small tiles that are scaled up. */
+  quality?: number
   /** Only set for above-the-fold hero imagery. */
   priority?: boolean
   /** CSS object-position for cropped media, e.g. 'center top'. */
@@ -42,6 +44,7 @@ export default function MediaPlaceholder({
   src,
   alt,
   sizes = DEFAULT_SIZES,
+  quality,
   priority = false,
   objectPosition,
   fit = 'cover',
@@ -154,6 +157,7 @@ export default function MediaPlaceholder({
           alt={alt || label}
           fill
           sizes={sizes}
+          quality={quality}
           priority={priority}
           loading={priority ? undefined : 'lazy'}
           style={objectPosition ? { objectPosition } : undefined}
