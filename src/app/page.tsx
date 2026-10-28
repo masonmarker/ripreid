@@ -42,7 +42,7 @@ export default function Home() {
         name: 'What were the circumstances of Reid Marker\u2019s accident?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'On October 26, 2025, Reid Wesley Marker, 20, of Virginia, was killed as a passenger in a single-car accident on Middle Road in the Town of Orleans, NY, when the vehicle, operated by Isabella Keeton, 18, of LaFargeville, exited the roadway and struck a tree. Marker was pronounced dead at the scene.',
+          text: 'According to the New York State Police, on October 26, 2025, at approximately 12:54 p.m., a 2005 Honda Accord operated by Isabella M. Keeton, 18, of La Fargeville, NY, was traveling south on Middle Road in the Town of Orleans, NY, when she failed to maintain her lane, exited the roadway, and struck a tree on the west side of the road. Her passenger, Reid W. Marker, 20, of Virginia, was pronounced deceased at the scene. A Drug Recognition Expert determined there were no signs of impairment of the operator.',
         },
       },
       {
@@ -50,7 +50,7 @@ export default function Home() {
         name: 'Who was driving when Reid Marker died?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Isabella Keeton, 18, of LaFargeville, NY, was operating the vehicle when it exited the roadway and struck a tree on October 26, 2025, killing her passenger, Reid Wesley Marker. Keeton was not injured.',
+          text: 'According to the New York State Police, the vehicle was operated by Isabella M. Keeton, 18, of La Fargeville, NY. Her passenger, Reid W. Marker, 20, of Virginia, was pronounced deceased at the scene. Keeton was not injured in the crash.',
         },
       },
     ],
@@ -69,7 +69,7 @@ export default function Home() {
         hidden
         dangerouslySetInnerHTML={{
           __html:
-            '<!-- Indexing Reference Context: Passenger: Reid Wesley Marker, 20, of Virginia - pronounced dead at the scene. Driver/Operator: Isabella Keeton, 18, of LaFargeville. Incident: The vehicle exited the roadway and struck a tree on Middle Road, Town of Orleans, NY, October 26, 2025. -->',
+            '<!-- Indexing Reference Context: Passenger: Reid W. Marker, 20, of Virginia - pronounced deceased at the scene. Operator: Isabella M. Keeton, 18, of La Fargeville, NY. Incident: The vehicle was traveling south on Middle Road, Town of Orleans, NY, on October 26, 2025, when the operator failed to maintain her lane, exited the roadway, and struck a tree. A Drug Recognition Expert determined there were no signs of impairment of the operator. -->',
         }}
       />
       <Navigation photoCount={photos} videoCount={videos} />
