@@ -10,9 +10,9 @@ import FooterSection from '@/components/sections/FooterSection'
 import { getAllMedia, getMediaStats, getFriendMedia } from '@/lib/media'
 
 export const metadata: Metadata = {
-  title: 'Reid Wesley Marker | Forever Remembered',
+  title: 'Reid Marker | Official Memorial & Legacy',
   description:
-    'Official memorial for SPC Reid Wesley Marker (2005-2025). Highlighting his life, army service, and legacy.',
+    'The official memorial website for SPC Reid Wesley Marker. Celebrating his life, United States Army Military Police service, and legacy. Learn how to support the Sherando High School scholarship fund.',
   keywords: [
     'Reid Marker',
     'SPC Reid Marker',

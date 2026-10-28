@@ -200,6 +200,7 @@ export default function LifeSection({ friendMedia }: LifeSectionProps) {
                 <a
                   href="https://www.wwnytv.com/2025/10/27/town-orleans-crash-claims-life-virginia-man/"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-600 hover:text-blue-800 underline"
                 >
                   single-car accident
@@ -209,6 +210,7 @@ export default function LifeSection({ friendMedia }: LifeSectionProps) {
                 <a
                   href="https://www.wwnytv.com/2025/10/27/town-orleans-crash-claims-life-virginia-man/"
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="text-blue-600 hover:text-blue-800 underline"
                 >
                   Full Article
