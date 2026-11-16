@@ -21,6 +21,8 @@ const nextConfig: NextConfig = {
   // force-static — the JSON is baked at build time — so the files are never
   // needed at runtime. They're already served as static assets by the CDN.
   outputFileTracingExcludes: {
+    '/': ['public/pictures/**', 'public/videos/**'],
+    '/gallery': ['public/pictures/**', 'public/videos/**'],
     '/api/media': ['public/pictures/**', 'public/videos/**'],
   },
 }
