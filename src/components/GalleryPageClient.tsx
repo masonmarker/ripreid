@@ -161,7 +161,7 @@ export default function GalleryPageClient({ media, photoCount, videoCount }: Gal
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4"
             >
               <AnimatePresence mode="popLayout">
-                {filteredMedia.map((item) => (
+                {filteredMedia.map((item, index) => (
                   <motion.div
                     key={item.id}
                     layout
@@ -179,6 +179,9 @@ export default function GalleryPageClient({ media, photoCount, videoCount }: Gal
                         type={item.type}
                         src={item.src}
                         sizes="(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw"
+                        // The first row is above the fold and is the LCP
+                        // candidate; lazy-loading it just delays the paint.
+                        priority={index < 4 && item.type === 'photo'}
                       />
                       <div className="pointer-events-none absolute inset-0 bg-forest-900/0 group-hover:bg-forest-900/20 transition-colors duration-300" />
                       {item.type === 'video' && (
