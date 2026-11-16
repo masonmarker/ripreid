@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
     remotePatterns: [],
     // Modern formats cut these full-resolution phone photos down by ~80%.
     formats: ['image/avif', 'image/webp'],
+    // Hero portrait renders at quality 90; everything else uses the default 75.
+    qualities: [75, 90],
     // Narrow widths matter most here: the smallest default deviceSize is 640px,
     // which is far wider than the grid tiles actually render at on a phone.
     deviceSizes: [320, 420, 640, 768, 1024, 1280, 1600, 1920],
