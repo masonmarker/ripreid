@@ -16,6 +16,13 @@ const nextConfig: NextConfig = {
   // Lets you open the dev server from your phone on the LAN without Next
   // blocking the HMR requests as cross-origin.
   allowedDevOrigins: ['127.0.0.1', '192.168.1.4', '192.168.1.*'],
+  // getAllMedia() fs-scans public/{pictures,videos}, so nft traces every media
+  // file into this function (~312 MB uncompressed on Vercel). The route is
+  // force-static — the JSON is baked at build time — so the files are never
+  // needed at runtime. They're already served as static assets by the CDN.
+  outputFileTracingExcludes: {
+    '/api/media': ['public/pictures/**', 'public/videos/**'],
+  },
 }
 
 export default nextConfig
